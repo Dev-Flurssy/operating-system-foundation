@@ -1,0 +1,364 @@
+A BRIEF HISTORY OF MACHINE HARDWARE
+
+To understand the Operating System (software), we must first understand computer hardware.
+Hardware refers to the physical parts of a computer system.
+
+Examples:
+• Memory Chips
+• CPU
+• Keyboard
+• Mouse
+• Monitor
+• Printers
+• Storage Devices
+
+------------------------------------------------------------
+MAJOR HARDWARE COMPONENTS
+
+A computer system consists of three major hardware components:
+
+1. Main Memory (RAM)
+2. Input/Output Devices (I/O Devices)
+3. Central Processing Unit (CPU)
+
+------------------------------------------------------------
+MAIN MEMORY (RAM)
+
+RAM (Random Access Memory) is the computer's main working memory.
+RAM is where programs, instructions, and data must be stored before they can be processed.
+
+Functions:
+• Stores programs currently being used
+• Stores data currently being processed
+• Provides quick access to information
+
+A program must be loaded into RAM before the CPU can execute it.
+
+------------------------------------------------------------
+INPUT/OUTPUT DEVICES (I/O DEVICES)
+
+I/O devices allow communication between the computer and the outside world.
+
+Input devices send data into the computer.
+Output devices receive data from the computer.
+
+Examples:
+• Keyboard
+• Mouse
+• Printer
+• Scanner
+• Monitor
+• Disk Drives
+• CD/DVD Drives
+• Flash Drives
+• Camera
+
+------------------------------------------------------------
+CENTRAL PROCESSING UNIT (CPU)
+
+The CPU is the brain of the computer.
+The CPU is responsible for interpreting and executing instructions.
+
+Functions:
+• Controls system operations
+• Processes data
+• Executes programs
+• Controls memory access
+• Controls I/O operations
+
+All storage operations, data manipulations, and I/O activities are initiated or controlled by the CPU.
+
+------------------------------------------------------------
+
+EARLY COMPUTER CLASSIFICATIONS
+
+Before the mid-1970s, computers were classified according to:
+• Size
+• Cost
+• Memory Capacity
+
+The major categories were:
+1. Mainframe Computers
+2. Minicomputers
+3. Supercomputers
+4. Microcomputers
+
+------------------------------------------------------------
+MAINFRAME COMPUTERS
+
+Mainframes were very large and expensive computers.
+
+Characteristics:
+• Extremely large physical size
+• Large memory capacity
+• Very expensive
+• Used by many users simultaneously
+
+Example: IBM 360 (1964)
+
+Features:
+• Required a large air-conditioned room
+• Had 64 KB of memory
+• Cost about $200,000
+
+Used By:
+• Government agencies
+• Universities
+• Large corporations
+
+------------------------------------------------------------
+MINICOMPUTERS
+
+Minicomputers were created for smaller organizations.
+
+Characteristics:
+• Smaller than mainframes
+• Less expensive
+• Lower memory capacity
+• Supported a few dozen users
+
+Example:
+PDP-8 by Digital Equipment Corporation
+
+Cost:
+Less than $18,000
+
+Used By:
+• Schools
+• Colleges
+• Small organizations
+
+------------------------------------------------------------
+MIDRANGE COMPUTERS
+
+Modern systems between microcomputers and mainframes are often called midrange computers.
+
+Characteristics:
+• Moderate processing power
+• Moderate memory capacity
+• Support multiple users
+
+------------------------------------------------------------
+SUPERCOMPUTERS
+
+Supercomputers were designed for extremely complex calculations.
+
+Characteristics:
+• Extremely powerful
+• Very fast processing
+• Thousands of processors
+• Massive computational capability
+
+Example:
+Cray Supercomputer
+
+------------------------------------------------------------
+USES OF SUPERCOMPUTERS
+
+• Weather forecasting
+• Military operations
+• Scientific research• Animation and movie production
+• Product development
+• Oil exploration
+• Large-scale simulations
+
+------------------------------------------------------------
+MICROCOMPUTERS
+
+Microcomputers were developed to provide computing power to individual users.
+
+Characteristics:
+• Low cost
+• Smaller size
+• Single-user systems
+• Personal computing devices
+
+Examples:
+• Personal Computers (PCs)
+• Desktop Computers
+• Laptops
+
+Early microcomputers typically had:
+• 64 KB RAM
+
+------------------------------------------------------------
+WORKSTATIONS
+
+Workstations are powerful microcomputers used by professionals.
+
+Characteristics:
+• Powerful CPUs
+• Large memory capacity
+• High-resolution graphics
+• Often connected to networks
+
+Used For:
+• Engineering
+• Computer-Aided Design (CAD)
+• Scientific Calculations
+• Technical Applications
+
+------------------------------------------------------------
+SERVERS
+
+Servers are powerful computers that provide services to other computers on a network.
+A server provides resources and services to clients.
+
+Examples:
+• Print Server
+• Email Server
+• Web Server
+• File Server
+
+------------------------------------------------------------
+FILE SERVER
+
+A File Server stores and manages files for network users.
+
+Functions:
+• Stores files
+• Retrieves files
+• Shares files across a network
+• Manages access permissions
+
+Clients: Other computers connected to the network.
+
+------------------------------------------------------------
+OPERATING SYSTEMS FOR DIFFERENT PLATFORMS
+
+Microcomputers:
+• Linux
+• UNIX
+• Windows
+
+---------------------------------------
+Mainframe Computers:
+
+• IBM z/390
+• Linux
+• UNIX
+
+---------------------------------------
+Supercomputers:
+
+• IRIX
+• Linux
+• UNICOS
+
+---------------------------------------
+Workstations and Servers:
+
+• Linux
+• UNIX
+• Windows
+
+---------------------------------------
+Networks:
+
+• Linux
+• NetWare
+• UNIX
+• Windows
+
+---------------------------------------
+Personal Digital Assistants (PDAs):
+
+• BlackBerry OS
+• Linux
+• Palm OS
+• Windows Mobile
+
+------------------------------------------------------------
+MODERN CHANGES IN COMPUTER SYSTEMS
+
+Technology has advanced rapidly since the 1970s.
+
+As a result:
+• Computers became smaller
+• Computers became faster
+• Computers became cheaper
+• Memory capacity increased significantly
+• Networking became standard
+
+------------------------------------------------------------
+NETWORKING IN MODERN SYSTEMS
+
+Networking is now a major feature of computer systems.
+
+Networking connects:
+• Workstations
+• Servers
+• Printers
+• Storage Devices
+• Mobile Devices
+
+Benefits:
+• Resource sharing
+• Communication
+• Data exchange
+• Centralized services
+
+------------------------------------------------------------
+MODERN COMPUTER CLASSIFICATION
+
+OLD METHOD:
+Computers were classified by:
+• Size
+• Cost
+• Memory Capacity
+
+------------------------------------------------------------
+NEW METHOD:
+
+Computers are often classified by:
+• Processor Power
+• Processing Speed
+• Performance
+
+------------------------------------------------------------
+MOORE'S LAW
+
+Computing power grows rapidly over time.
+
+Gordon Moore observed that computer chips roughly double in capacity every 18–24 months.
+This observation became known as: MOORE'S LAW
+
+------------------------------------------------------------
+EXAMPLES OF MOORE'S LAW
+
+Intel 4004 (1971)
+• 2,300 Transistors
+Pentium II
+• 7.5 Million Transistors
+Pentium 4 Extreme Edition (2004)
+• 178 Million Transistors
+
+------------------------------------------------------------
+EFFECT OF MOORE'S LAW
+
+As transistor counts increase:
+• Computers become faster
+• More memory can be supported
+• More functions can be performed
+• Computing power grows exponentially
+
+------------------------------------------------------------
+QUICK  SUMMARY
+
+Main Hardware Components:
+1. RAM → Stores programs and data currently in use
+2. I/O Devices → Communicate with the outside world
+3. CPU → Executes instructions and controls system operations
+
+---------------------------------------
+Computer Types:
+
+Mainframe → Large organizations
+Minicomputer → Schools and small organizations
+Midrange Computer → Between microcomputers and mainframes
+SupercomputeR → Scientific and high-speed calculations
+Microcomputer → Personal use
+Workstation → Professional technical work
+Server → Provides network services
+
+------------------------------------------------------------

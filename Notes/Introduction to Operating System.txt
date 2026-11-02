@@ -29,7 +29,6 @@ The four essential managers are:
 2. Processor Manager
 3. Device Manager
 4. File Manager
-
 At the top is: 5. User Interface
 Modern operating systems may also include: 6. Network Manager
 
@@ -43,7 +42,7 @@ Functions:
 • Tracks memory usage
 • Allocates memory to programs
 • Releases memory when no longer needed
-• Prevents memory conflicts
+• Prevents memory conflicts 
 
 ------------------------------------------------------------
 PROCESSOR MANAGER
@@ -61,6 +60,7 @@ Functions:
 DEVICE MANAGER
 
 Manages hardware devices.
+Resource Managed: Input/Output Devices
 
 Examples:
 • Keyboard
@@ -76,12 +76,11 @@ Functions:
 • Allocates devices
 • Releases devices after use
 
-Resource Managed: Input/Output Devices
-
 ------------------------------------------------------------
 FILE MANAGER
 
 Manages files and storage.
+Resource Managed: Files and Secondary Storage
 
 Functions:
 • Creates files
@@ -90,12 +89,11 @@ Functions:
 • Controls file access
 • Maintains storage structure
 
-Resource Managed: Files and Secondary Storage
-
 ------------------------------------------------------------
 USER INTERFACE (UI)
 
 Allows users to communicate with the operating system.
+The User Interface differs from one operating system to another.
 
 Functions:
 • Accepts user commands
@@ -108,13 +106,11 @@ Examples:
 • Command Prompt
 • macOS Interface
 
-Important:
-The User Interface differs from one operating system to another.
-
 ------------------------------------------------------------
 NETWORK MANAGER
 
 Manages network and internet communication.
+Modern operating systems usually include a Network Manager.
 
 Functions:
 • Controls network communication
@@ -127,9 +123,6 @@ Examples:
 • Email communication
 • File sharing
 • Remote connections
-
-Important:
-Modern operating systems usually include a Network Manager.
 
 ------------------------------------------------------------
 RESPONSIBILITIES OF EVERY MANAGER
@@ -191,13 +184,13 @@ The Memory Manager verifies whether a request for memory is valid.
 If the request is legal: → Memory is allocated
 If the request is illegal: → The request is rejected
 
-------------------------------------------------------------
+---------------------------------------
 Step 2: Allocate Memory
 
 The Memory Manager assigns an available portion of memory to a program or process.
-Important: Only unused memory can be allocated.
+Only unused memory can be allocated.
 
-------------------------------------------------------------
+---------------------------------------
 Step 3: Track Memory Usage
 
 In multiuser systems, the Memory Manager keeps a record of:
@@ -205,13 +198,13 @@ In multiuser systems, the Memory Manager keeps a record of:
 • Which section of memory is being used
 • How much memory is being used
 
-------------------------------------------------------------
+---------------------------------------
 Step 4: Protect the Operating System
 
 One of its most important duties is protecting the memory space occupied by the operating system.
-Important: Users and programs must not accidentally or intentionally modify the operating system area in memory.
+Users and programs must not accidentally or intentionally modify the operating system area in memory.
 
-------------------------------------------------------------
+---------------------------------------
 Step 5: Deallocate Memory
 
 When a program finishes:
@@ -223,8 +216,7 @@ PROCESSOR MANAGEMENT (PROCESSOR MANAGER)
 
 The Processor Manager controls the CPU and decides which process gets the processor.
 CPU (Central Processing Unit) is the component that executes instructions.
-
-Definition: A Process is a program currently being executed.
+A Process is a program currently being executed.
 
 ------------------------------------------------------------
 RESPONSIBILITIES OF THE PROCESSOR MANAGER
@@ -238,7 +230,7 @@ It knows whether a process is:
 • Ready
 • Finished
 
-------------------------------------------------------------
+---------------------------------------
 Step 2: Allocate the CPU
 
 The Processor Manager decides:
@@ -246,7 +238,7 @@ The Processor Manager decides:
 • When it runs
 • How long it runs
 
-------------------------------------------------------------
+---------------------------------------
 Step 3: Monitor Process States
 
 The Processor Manager tracks movement between states.
@@ -255,7 +247,7 @@ Example:
 Ready → Running → Waiting → Running → Finished
 Because it controls these movements, it is often compared to a traffic controller.
 
-------------------------------------------------------------
+---------------------------------------
 Step 4: Prepare CPU Resources
 
 Before execution:
@@ -263,7 +255,7 @@ Before execution:
 • Control tables are created
 • CPU resources are assigned
 
-------------------------------------------------------------
+---------------------------------------
 Step 5: Reclaim the CPU
 
 When:
@@ -286,7 +278,7 @@ Responsibilities:
 
 This is called: High-Level Scheduling
 
-------------------------------------------------------------
+---------------------------------------
 Level 2: Process Scheduler
 
 Handles processes already inside the system.
@@ -316,7 +308,7 @@ RESPONSIBILITIES OF THE DEVICE MANAGER
 Step 1: Monitor Devices
 Keeps track of every device in the system.
 
-------------------------------------------------------------
+---------------------------------------
 Step 2: Allocate Devices
 
 Assigns devices to programs when needed.
@@ -325,12 +317,12 @@ Example:
 A program needs a printer.
 The Device Manager assigns the printer.
 
-------------------------------------------------------------
+---------------------------------------
 Step 3: Start Device Operations
 
 The Device Manager activates the assigned device so it can perform its task.
 
-------------------------------------------------------------
+---------------------------------------
 Step 4: Deallocate Devices
 
 When the task finishes:
@@ -354,13 +346,12 @@ Examples:
 • Compilers
 
 ------------------------------------------------------------
-
 RESPONSIBILITIES OF THE FILE MANAGER
 
 Step 1: Keep Track of Files
 The File Manager records information about every file in the system.
 
-------------------------------------------------------------
+---------------------------------------
 Step 2: Control Access
 
 Determines who can access files.
@@ -369,7 +360,7 @@ Example:
 • User A can access File X
 • User B cannot access File X
 
-------------------------------------------------------------
+---------------------------------------
 Step 3: Enforce Permissions
 
 The File Manager determines what actions users can perform.
@@ -379,12 +370,12 @@ Read Only → Can only view the file
 Read and Write → Can view and modify the file
 Create/Delete Access → Can create or remove files
 
-------------------------------------------------------------
+---------------------------------------
 Step 4: Allocate Resources
 
 Provides storage resources needed by files.
 
-------------------------------------------------------------
+---------------------------------------
 Step 5: Deallocate Resources
 
 Releases storage resources when they are no longer required.
@@ -400,7 +391,7 @@ RESPONSIBILITIES OF THE NETWORK MANAGER
 Step 1: Manage Network Communication
 Controls communication between connected computers.
 
-------------------------------------------------------------
+---------------------------------------
 Step 2: Share Hardware Resources
 
 Examples:
@@ -410,7 +401,7 @@ Examples:
 • Disk Drives
 • Modems
 
-------------------------------------------------------------
+---------------------------------------
 Step 3: Share Software Resources
 
 Examples:
@@ -419,7 +410,7 @@ Examples:
 • Compilers
 • Data Files
 
-------------------------------------------------------------
+---------------------------------------
 Step 4: Control Access
 
 Determines which users can access shared resources.
