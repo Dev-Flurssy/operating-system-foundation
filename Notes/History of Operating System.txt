@@ -82,7 +82,7 @@ The major categories were:
 2. Minicomputers
 3. Supercomputers
 4. Microcomputers
-
+ 
 ------------------------------------------------------------
 MAINFRAME COMPUTERS
 

@@ -1,0 +1,538 @@
+TYPES OF OPERATING SYSTEMS
+
+Operating systems are divided into five major categories based on:
+• Response Time
+• How Data Is Entered
+• How Users Interact With The System
+
+The five types are:
+1. Batch Systems
+2. Interactive Systems
+3. Real-Time Systems
+4. Hybrid Systems
+5. Embedded Systems
+
+------------------------------------------------------------
+BATCH OPERATING SYSTEM
+
+Batch systems process jobs in groups called batches.
+A batch is a collection of jobs processed together without user interaction.
+
+------------------------------------------------------------
+HOW BATCH SYSTEMS WORK
+
+Step 1: Users prepare jobs.
+Step 2: Jobs are grouped into a batch.
+Step 3: The entire batch is submitted to the computer.
+Step 4: The computer processes all jobs one after another.
+Step 5: Results are produced after processing is complete.
+
+------------------------------------------------------------
+INPUT METHODS
+
+Early batch systems used:
+• Punched Cards
+• Magnetic Tapes
+
+------------------------------------------------------------
+CHARACTERISTICS OF BATCH SYSTEMS
+
+• No direct user interaction
+• Jobs processed in groups
+• High throughput
+• Slow response time
+
+------------------------------------------------------------
+THROUGHPUT
+
+Throughput is the number of jobs completed in a specific amount of time.
+
+Example:
+550 Jobs Per Hour
+Higher throughput means better batch system performance.
+
+------------------------------------------------------------
+INTERACTIVE OPERATING SYSTEM
+
+Interactive systems allow users to communicate directly with the computer.
+
+------------------------------------------------------------
+WHY THEY WERE DEVELOPED
+
+Interactive systems were created to provide faster responses than batch systems.
+Programmers needed quick feedback when testing and debugging programs.
+
+------------------------------------------------------------
+HOW INTERACTIVE SYSTEMS WORK
+
+Step 1: User enters a command.
+Step 2: Operating system processes the command immediately.
+Step 3: Results are displayed quickly.
+
+------------------------------------------------------------
+CHARACTERISTICS OF INTERACTIVE SYSTEMS
+
+• Direct user interaction
+• Fast response time
+• Immediate feedback
+• Uses time-sharing
+
+------------------------------------------------------------
+TIME-SHARING
+
+Time-sharing allows many users to share the CPU.
+Each user receives a small portion of CPU time.
+The CPU switches rapidly between users.
+
+------------------------------------------------------------
+EXAMPLE
+
+User Types: OPEN FILE
+Operating System Immediately Responds
+This response can occur in fractions of a second.
+
+------------------------------------------------------------
+REAL-TIME OPERATING SYSTEM
+
+Real-time systems must process data within strict deadlines.
+real-time operating system must respond before a specified deadline.
+
+Missing the deadline can lead to serious consequences.
+
+------------------------------------------------------------
+CHARACTERISTICS OF REAL-TIME SYSTEMS
+
+• Extremely reliable
+• Fast response
+• Strict deadlines
+• Immediate processing
+• Failure handling mechanisms
+
+------------------------------------------------------------
+USES OF REAL-TIME SYSTEMS
+
+• Space Missions
+• Airport Traffic Control
+• Aircraft Systems
+• Medical Equipment
+• Telephone Networks
+• Industrial Control Systems
+
+------------------------------------------------------------
+FAIL GRACEFULLY
+
+Fail Gracefully means preserving as much data and functionality as possible when a failure occurs.
+
+------------------------------------------------------------
+TYPES OF REAL-TIME SYSTEMS
+
+There are two types:
+1. Hard Real-Time Systems
+2. Soft Real-Time Systems
+
+------------------------------------------------------------
+HARD REAL-TIME SYSTEM
+
+Missing a deadline may result in complete system failure.
+
+Characteristics:
+• No delay allowed
+• Deadlines are critical
+• Failure can be catastrophic
+
+Examples:
+• Aircraft Control Systems
+• Spacecraft Control Systems
+• Medical Life-Support Systems
+
+------------------------------------------------------------
+SOFT REAL-TIME SYSTEM
+
+Missing a deadline lowers performance but does not completely stop the system.
+
+Characteristics:
+• Small delays tolerated
+• Reduced performance
+• System continues operating
+
+Examples:
+• Video Streaming
+• Multimedia Applications
+• Online Services
+
+------------------------------------------------------------
+HYBRID OPERATING SYSTEM
+
+Hybrid systems combine Batch Systems and Interactive Systems.
+
+------------------------------------------------------------
+HOW HYBRID SYSTEMS WORK
+
+Step 1: Users interact with the computer normally.
+Step 2: Interactive tasks are processed immediately.
+Step 3: Batch jobs run in the background.
+Step 4: Unused CPU time is utilized efficiently.
+
+------------------------------------------------------------
+CHARACTERISTICS OF HYBRID SYSTEMS
+
+• Appears interactive
+• Runs batch jobs in background
+• Efficient resource usage
+• Fast user response
+
+------------------------------------------------------------
+BENEFITS OF HYBRID SYSTEMS
+
+• Better CPU utilization
+• Better response time
+• Improved efficiency
+
+------------------------------------------------------------
+EMBEDDED OPERATING SYSTEM
+
+Embedded operating systems are built into other devices.
+An embedded system is a computer placed inside another product to provide special functions.
+
+------------------------------------------------------------
+EXAMPLES OF EMBEDDED SYSTEMS
+
+• Automobiles
+• Elevators
+• Washing Machines
+• Microwave Ovens
+• Digital Music Players
+• Pacemakers
+• Smart Devices
+
+------------------------------------------------------------
+AUTOMOBILE APPLICATIONS
+
+Embedded computers help control:
+• Engine Performance
+• Navigation
+• Braking Systems
+• Traffic Assistance Systems
+
+------------------------------------------------------------
+SMART ROADS
+
+Smart roads communicate with vehicles and provide alternate routes when traffic becomes congested.
+
+------------------------------------------------------------
+CHARACTERISTICS OF EMBEDDED OPERATING SYSTEMS
+
+• Designed for specific tasks
+• Highly efficient
+• Limited memory usage
+• Limited resources
+• Customized for individual devices
+
+------------------------------------------------------------
+WHY EMBEDDED SYSTEMS ARE DIFFERENT
+
+General-purpose operating systems include many features.
+Embedded operating systems include only the features required for a specific device.
+Unneeded components are removed.
+
+------------------------------------------------------------
+KERNEL
+
+The Kernel is the core part of an operating system.
+
+------------------------------------------------------------
+ADVANTAGE OF SMALL KERNELS
+
+A small kernel:
+• Uses less memory
+• Is more efficient
+• Can be customized easily
+• Is ideal for embedded systems
+
+------------------------------------------------------------
+BRIEF HISTORY OF OPERATING SYSTEM DEVELOPMENT
+
+Operating systems evolved as computer hardware evolved.
+
+------------------------------------------------------------
+1940s - FIRST GENERATION COMPUTERS
+
+Period: 1940 – 1955
+Technology: Vacuum Tubes
+
+Characteristics:
+• Computers were room-sized
+• No standard operating systems
+• Programs controlled hardware directly
+• Programmers operated machines manually
+
+------------------------------------------------------------
+HOW PROGRAMMERS WORKED
+
+Step 1: Reserve the computer.
+Step 2: Load instructions manually.
+Step 3: Monitor execution from the control console.
+Step 4: Manually debug errors.
+
+------------------------------------------------------------
+THE FIRST COMPUTER BUG
+
+The term "bug" originated from an actual insect.
+A moth became trapped inside a Harvard computer and caused it to fail.
+Since then computer errors have been called bugs.
+
+------------------------------------------------------------
+EARLY SOFTWARE TOOLS
+
+Developments Included:
+• Compilers
+• Assemblers
+• Utility Programs
+• Standard Subroutines
+• Device Drivers
+
+------------------------------------------------------------
+1950s - SECOND GENERATION COMPUTERS
+
+Period: 1955 – 1965
+Businesses demanded better system efficiency.
+
+------------------------------------------------------------
+MAJOR IMPROVEMENTS
+
+1. Computer Operators → Operators managed system activities.
+
+2. Job Scheduling Jobs → with similar requirements were grouped together.
+
+Examples:
+• FORTRAN Jobs Together
+• Tape Jobs Together
+• Card Reader Jobs Together
+
+------------------------------------------------------------
+JOB CONTROL LANGUAGE (JCL)
+
+JCL was used to define a job's requirements.
+
+JCL specified:
+• User Information
+• Programs
+• Required Resources
+• Execution Instructions
+
+------------------------------------------------------------
+PERFORMANCE IMPROVEMENTS
+
+1. Faster I/O Devices
+2. Blocking → Several logical records grouped into one physical record.
+3. Buffers → Temporary storage areas between CPU and devices.
+4. Spooling → Using secondary devices to temporarily hold jobs before processing.
+
+------------------------------------------------------------
+TIMER INTERRUPTS
+
+Timer interrupts prevented programs from running forever.
+If allocated time expired: → The operating system stopped the program.
+
+------------------------------------------------------------
+1960s - THIRD GENERATION COMPUTERS
+
+The major innovation was Multiprogramming.
+
+------------------------------------------------------------
+MULTIPROGRAMMING
+
+Multiple programs are loaded into memory simultaneously.
+The CPU switches between them.
+
+------------------------------------------------------------
+INTERRUPTS
+
+Signals that notify the CPU that attention is required.
+Example: A print request generates an interrupt.
+
+------------------------------------------------------------
+PASSIVE MULTIPROGRAMMING
+
+The operating system waits for jobs to generate interrupts.
+Problem: CPU-bound programs could monopolize the CPU.
+
+------------------------------------------------------------
+CPU-BOUND PROCESS
+
+A process that performs continuous CPU calculations before requesting I/O operations.
+
+------------------------------------------------------------
+ACTIVE MULTIPROGRAMMING
+
+The operating system actively controls CPU allocation.
+
+------------------------------------------------------------
+TIME SLICING
+
+Each process receives a small amount of CPU time.
+When the time expires:
+• Process is interrupted
+• Another process is executed
+
+------------------------------------------------------------
+1970s
+
+Faster CPUs created a gap between CPU speed and I/O speed.
+
+------------------------------------------------------------
+VIRTUAL MEMORY
+
+Programs are divided into parts.
+Only the required part is loaded into RAM.
+Remaining parts stay in secondary storage.
+
+------------------------------------------------------------
+ADVANTAGES OF VIRTUAL MEMORY
+
+• Uses memory efficiently
+• Allows larger programs
+• Reduces RAM requirements
+
+------------------------------------------------------------
+DATABASE MANAGEMENT SYSTEMS
+
+Database software became popular.
+
+Benefits:
+• Organized data
+• Reduced duplication
+• Easier updates
+• Easier retrieval
+
+------------------------------------------------------------
+1980s
+
+Hardware became cheaper and more powerful.
+
+------------------------------------------------------------
+FIRMWARE
+
+Software permanently stored in ROM.
+Firmware = Hardware + Software
+
+------------------------------------------------------------
+MULTIPROCESSING
+
+A computer uses multiple processors simultaneously.
+
+Benefits:
+• Parallel processing
+• Better performance
+• Faster execution
+
+------------------------------------------------------------
+NETWORK OPERATING SYSTEMS
+
+Networked computers became common.
+
+Capabilities:
+• Remote Login
+• Resource Sharing
+• File Sharing
+• Communication
+
+------------------------------------------------------------
+DISTRIBUTED OPERATING SYSTEMS
+
+A group of computers works together as one system.
+Users do not know which processor runs their programs.
+The operating system manages everything transparently.
+
+------------------------------------------------------------
+1990s
+
+The Internet became widespread.
+
+------------------------------------------------------------
+MAJOR DEVELOPMENTS
+
+• World Wide Web
+• Email Support
+• Network Security
+• Multimedia Systems
+
+------------------------------------------------------------
+MULTIMEDIA SYSTEMS
+
+Examples:
+• Audio Editing
+• Video Editing
+• Graphics Processing
+• Digital Cameras
+• DVD Systems
+
+------------------------------------------------------------
+CHALLENGE
+
+Multimedia requires:
+
+• Large Storage
+• High Processing Power
+• Specialized Hardware
+
+------------------------------------------------------------
+2000s
+
+Flexibility, reliability, and speed became major requirements.
+
+------------------------------------------------------------
+VIRTUALIZATION
+
+One physical server runs multiple virtual operating systems.
+
+------------------------------------------------------------
+BENEFITS OF VIRTUALIZATION
+
+• Better resource utilization
+• Multiple operating systems on one machine
+• Reduced hardware costs
+
+------------------------------------------------------------
+MULTICORE PROCESSORS
+
+A single processor chip contains multiple CPU cores.
+
+------------------------------------------------------------
+EXAMPLE
+
+Dual-Core Processor
+→ Two processing cores
+→ Two execution streams
+→ Faster performance
+
+------------------------------------------------------------
+MULTICORE BENEFITS
+
+• Faster processing
+• Better multitasking
+• Higher efficiency
+• Improved performance
+
+------------------------------------------------------------
+QUICK SUMMARY
+
+Types Of Operating Systems:
+1. Batch System → Processes jobs in batches
+2. Interactive System → Direct user interaction
+3. Real-Time System → Strict deadlines
+4. Hybrid System → Batch + Interactive
+5. Embedded System → Built into devices
+
+------------------------------------------------------------
+Major Operating System Developments:
+
+1940s → No Operating Systems
+1950s → Job Scheduling, JCL, Buffers
+1960s → Multiprogramming, Interrupts, Time Sharing
+1970s → Virtual Memory, Databases
+1980s → Multiprocessing, Networks, Firmware
+1990s → Internet, Security, Multimedia
+2000s → Virtualization, Multicore Processing
+
+------------------------------------------------------------
