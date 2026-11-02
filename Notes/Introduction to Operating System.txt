@@ -1,0 +1,478 @@
+WHAT IS AN OPERATING SYSTEM?
+
+An Operating System (OS) is the most important software in a computer.
+An Operating System is software that manages all hardware and software resources and acts as the boss of the computer.
+
+Think of it as: User → Operating System → Hardware
+
+------------------------------------------------------------
+WHY IS AN OPERATING SYSTEM IMPORTANT?
+
+When a user gives a command:
+Step 1: The OS receives the command
+Step 2: The OS decides how the command should be handled
+Step 3: The OS allocates the required resources
+Step 4: The OS ensures the task is executed
+Step 5: The OS returns the result or an error message
+
+Important:
+The OS may not perform the task directly.
+It controls the parts of the system that perform the task.
+
+------------------------------------------------------------
+OPERATING SYSTEM STRUCTURE
+
+Every operating system consists of several managers working together.
+
+The four essential managers are:
+1. Memory Manager
+2. Processor Manager
+3. Device Manager
+4. File Manager
+
+At the top is: 5. User Interface
+Modern operating systems may also include: 6. Network Manager
+
+------------------------------------------------------------
+MEMORY MANAGER
+
+Manages the computer's main memory (RAM).
+Resource Managed: RAM (Main Memory)
+
+Functions:
+• Tracks memory usage
+• Allocates memory to programs
+• Releases memory when no longer needed
+• Prevents memory conflicts
+
+------------------------------------------------------------
+PROCESSOR MANAGER
+
+Manages the CPU.
+Resource Managed: CPU (Processor)
+
+Functions:
+• Decides which process runs next
+• Allocates CPU time
+• Monitors processor usage
+• Handles process scheduling
+
+------------------------------------------------------------
+DEVICE MANAGER
+
+Manages hardware devices.
+
+Examples:
+• Keyboard
+• Mouse
+• Printer
+• Monitor
+• Disk Drives
+• Modem
+
+Functions:
+• Controls devices
+• Coordinates device usage
+• Allocates devices
+• Releases devices after use
+
+Resource Managed: Input/Output Devices
+
+------------------------------------------------------------
+FILE MANAGER
+
+Manages files and storage.
+
+Functions:
+• Creates files
+• Deletes files
+• Organizes files
+• Controls file access
+• Maintains storage structure
+
+Resource Managed: Files and Secondary Storage
+
+------------------------------------------------------------
+USER INTERFACE (UI)
+
+Allows users to communicate with the operating system.
+
+Functions:
+• Accepts user commands
+• Displays results
+• Provides interaction between user and computer
+
+Examples:
+• Windows Desktop
+• Linux Terminal
+• Command Prompt
+• macOS Interface
+
+Important:
+The User Interface differs from one operating system to another.
+
+------------------------------------------------------------
+NETWORK MANAGER
+
+Manages network and internet communication.
+
+Functions:
+• Controls network communication
+• Handles data transmission
+• Manages protocols
+• Supports resource sharing
+
+Examples:
+• Internet access
+• Email communication
+• File sharing
+• Remote connections
+
+Important:
+Modern operating systems usually include a Network Manager.
+
+------------------------------------------------------------
+RESPONSIBILITIES OF EVERY MANAGER
+
+Regardless of the manager, each performs four main tasks.
+Task 1: Monitor Resources
+Continuously checks the status of resources.
+
+Examples:
+• Memory usage
+• CPU usage
+• Device status
+• File activity
+
+------------------------------------------------------------
+Task 2: Enforce Policies
+
+Decides:
+• Who gets a resource
+• When they get it
+• How much they receive
+
+Example:
+If two programs want the printer, the Device Manager decides who prints first.
+
+------------------------------------------------------------
+Task 3: Allocate Resources
+
+Assigns resources when needed.
+
+Examples:
+• Give RAM to a program
+• Give CPU time to a process
+• Give printer access to a user
+
+------------------------------------------------------------
+Task 4: Deallocate Resources
+
+Releases resources when they are no longer needed.
+
+Examples:
+• Free memory
+• Release CPU time
+• Release devices
+• Close files
+
+------------------------------------------------------------
+MAIN MEMORY MANAGEMENT (MEMORY MANAGER)
+
+The Memory Manager is responsible for managing the computer's main memory (RAM).
+RAM (Random Access Memory) is the computer's main working memory where programs and data are stored while being used.
+
+------------------------------------------------------------
+RESPONSIBILITIES OF THE MEMORY MANAGER
+
+Step 1: Check Memory Requests
+The Memory Manager verifies whether a request for memory is valid.
+
+If the request is legal: → Memory is allocated
+If the request is illegal: → The request is rejected
+
+------------------------------------------------------------
+Step 2: Allocate Memory
+
+The Memory Manager assigns an available portion of memory to a program or process.
+Important: Only unused memory can be allocated.
+
+------------------------------------------------------------
+Step 3: Track Memory Usage
+
+In multiuser systems, the Memory Manager keeps a record of:
+• Who is using memory
+• Which section of memory is being used
+• How much memory is being used
+
+------------------------------------------------------------
+Step 4: Protect the Operating System
+
+One of its most important duties is protecting the memory space occupied by the operating system.
+Important: Users and programs must not accidentally or intentionally modify the operating system area in memory.
+
+------------------------------------------------------------
+Step 5: Deallocate Memory
+
+When a program finishes:
+• Memory is released
+• Memory becomes available for other programs
+
+------------------------------------------------------------
+PROCESSOR MANAGEMENT (PROCESSOR MANAGER)
+
+The Processor Manager controls the CPU and decides which process gets the processor.
+CPU (Central Processing Unit) is the component that executes instructions.
+
+Definition: A Process is a program currently being executed.
+
+------------------------------------------------------------
+RESPONSIBILITIES OF THE PROCESSOR MANAGER
+
+Step 1: Monitor Processes
+The Processor Manager keeps track of every process in the system.
+
+It knows whether a process is:
+• Running
+• Waiting
+• Ready
+• Finished
+
+------------------------------------------------------------
+Step 2: Allocate the CPU
+
+The Processor Manager decides:
+• Which process runs
+• When it runs
+• How long it runs
+
+------------------------------------------------------------
+Step 3: Monitor Process States
+
+The Processor Manager tracks movement between states.
+
+Example:
+Ready → Running → Waiting → Running → Finished
+Because it controls these movements, it is often compared to a traffic controller.
+
+------------------------------------------------------------
+Step 4: Prepare CPU Resources
+
+Before execution:
+• Registers are prepared
+• Control tables are created
+• CPU resources are assigned
+
+------------------------------------------------------------
+Step 5: Reclaim the CPU
+
+When:
+• The process finishes
+OR
+• Its allowed time expires
+
+The Processor Manager takes back the CPU and assigns it to another process.
+
+------------------------------------------------------------
+TWO LEVELS OF PROCESSOR MANAGEMENT
+
+Level 1: Job Scheduler
+Handles incoming jobs.
+
+Responsibilities:
+• Accept jobs
+• Reject jobs
+• Decide which jobs enter the system
+
+This is called: High-Level Scheduling
+
+------------------------------------------------------------
+Level 2: Process Scheduler
+
+Handles processes already inside the system.
+
+Responsibilities:
+• Decide which process gets the CPU
+• Decide how long it runs
+
+This is called: Low-Level Scheduling
+
+------------------------------------------------------------
+DEVICE MANAGEMENT (DEVICE MANAGER)
+
+The Device Manager controls all hardware devices connected to the computer.
+
+Examples:
+• Keyboard
+• Mouse
+• Printer
+• Monitor
+• Disk Drives
+• Ports
+
+------------------------------------------------------------
+RESPONSIBILITIES OF THE DEVICE MANAGER
+
+Step 1: Monitor Devices
+Keeps track of every device in the system.
+
+------------------------------------------------------------
+Step 2: Allocate Devices
+
+Assigns devices to programs when needed.
+
+Example:
+A program needs a printer.
+The Device Manager assigns the printer.
+
+------------------------------------------------------------
+Step 3: Start Device Operations
+
+The Device Manager activates the assigned device so it can perform its task.
+
+------------------------------------------------------------
+Step 4: Deallocate Devices
+
+When the task finishes:
+• Device is released
+• Device becomes available for another process
+
+------------------------------------------------------------
+MAIN GOAL OF DEVICE MANAGER
+
+Choose the most efficient way to use all devices according to the system's scheduling policy.
+
+------------------------------------------------------------
+FILE MANAGEMENT (FILE MANAGER)
+
+The File Manager controls all files stored in the system.
+
+Examples:
+• Program Files
+• Data Files
+• Applications
+• Compilers
+
+------------------------------------------------------------
+
+RESPONSIBILITIES OF THE FILE MANAGER
+
+Step 1: Keep Track of Files
+The File Manager records information about every file in the system.
+
+------------------------------------------------------------
+Step 2: Control Access
+
+Determines who can access files.
+
+Example:
+• User A can access File X
+• User B cannot access File X
+
+------------------------------------------------------------
+Step 3: Enforce Permissions
+
+The File Manager determines what actions users can perform.
+
+Examples:
+Read Only → Can only view the file
+Read and Write → Can view and modify the file
+Create/Delete Access → Can create or remove files
+
+------------------------------------------------------------
+Step 4: Allocate Resources
+
+Provides storage resources needed by files.
+
+------------------------------------------------------------
+Step 5: Deallocate Resources
+
+Releases storage resources when they are no longer required.
+
+------------------------------------------------------------
+NETWORK MANAGEMENT (NETWORK MANAGER)
+
+The Network Manager controls networking and resource sharing.
+
+------------------------------------------------------------
+RESPONSIBILITIES OF THE NETWORK MANAGER
+
+Step 1: Manage Network Communication
+Controls communication between connected computers.
+
+------------------------------------------------------------
+Step 2: Share Hardware Resources
+
+Examples:
+• CPU
+• Memory
+• Printers
+• Disk Drives
+• Modems
+
+------------------------------------------------------------
+Step 3: Share Software Resources
+
+Examples:
+• Programs
+• Applications
+• Compilers
+• Data Files
+
+------------------------------------------------------------
+Step 4: Control Access
+
+Determines which users can access shared resources.
+
+------------------------------------------------------------
+USER INTERFACE (UI)
+
+The User Interface is the part of the operating system that users interact with directly.
+
+------------------------------------------------------------
+OLD USER INTERFACE
+
+Users typed commands.
+
+Example: C:\> DIR
+This is called: Command-Driven Interface
+
+------------------------------------------------------------
+MODERN USER INTERFACE
+
+Users select options from menus, icons, and windows.
+
+This is called:
+Menu-Driven Interface
+or
+Graphical User Interface (GUI)
+
+------------------------------------------------------------
+PURPOSE OF THE USER INTERFACE
+
+• Accept commands from users
+• Display results
+• Provide communication between users and the operating system
+
+------------------------------------------------------------
+COOPERATION BETWEEN MANAGERS
+
+No manager works alone.
+All managers must work together.
+
+------------------------------------------------------------
+EXAMPLE: RUNNING A PROGRAM
+
+Step 1: The Device Manager receives input from the keyboard or mouse.
+Step 2: The command is sent to the User Interface and Processor Manager for validation.
+Step 3: The Processor Manager sends a confirmation message to the screen.
+Step 4: The Processor Manager checks whether the program is already in memory.
+Step 5: If the program is stored on disk: The File Manager finds its location.
+Step 6: The Device Manager retrieves the program from storage.
+Step 7: The Memory Manager loads the program into RAM and records its location.
+Step 8: The Processor Manager executes the program.
+Step 9: When execution finishes, a completion message is sent to the Processor Manager.
+Step 10: The Processor Manager informs the Device Manager.
+Step 11: The Device Manager updates the screen and notifies the user.
+
+------------------------------------------------------------
