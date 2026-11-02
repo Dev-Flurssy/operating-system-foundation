@@ -1,0 +1,305 @@
+THREADS
+
+Threads help the operating system perform multiple actions at the same time.
+Multi-core technology improves the ability of the operating system to manage threads efficiently.
+
+------------------------------------------------------------
+PROCESS, JOB, AND THREAD RELATIONSHIP
+
+A job submitted by a user consists of one or more processes.
+A process consists of one or more threads.
+
+Relationship: Job → Process → Thread
+
+------------------------------------------------------------
+PROCESS
+
+A process is a program that is currently being executed.
+
+A process has two important characteristics:
+1. It requires memory and other resources.
+2. It moves through different execution states.
+
+------------------------------------------------------------
+PROCESS RESOURCES
+
+A process may require:
+• Main Memory (RAM)
+• Data Files
+• Input Devices
+• Output Devices
+• CPU Time
+
+------------------------------------------------------------
+PROCESS STATES
+
+During execution a process moves through several states:
+• Ready
+• Running
+• Waiting
+• Finished
+
+Example: Ready → Running → Waiting → Running → Finished
+
+------------------------------------------------------------
+HEAVYWEIGHT PROCESS
+
+Conventional processes are called Heavyweight Processes.
+
+Characteristics:
+• Own system resources
+• Require memory
+• Contain process information
+• More expensive to manage
+
+------------------------------------------------------------
+SWAPPING
+
+Multiprogramming and Virtual Memory require processes to move between:
+• Main Memory
+• Secondary Storage
+
+This movement is called Swapping.
+
+------------------------------------------------------------
+PROBLEM WITH HEAVYWEIGHT PROCESSES
+
+Each time a process is swapped:
+• Process information must be saved
+• Process information must be restored
+• Extra processing time is required
+
+This creates Overhead.
+
+------------------------------------------------------------
+OVERHEAD
+
+Overhead is the extra work required by the operating system to manage resources and processes.
+
+More overhead means:
+• Less efficiency
+• More CPU usage
+• Slower performance
+
+------------------------------------------------------------
+THREAD
+
+A Thread is a smaller unit of execution inside a process.
+A thread is sometimes called a Lightweight Process.
+
+------------------------------------------------------------
+DEFINITION OF A THREAD
+
+A thread is the smallest unit that can be scheduled and executed by the operating system.
+
+------------------------------------------------------------
+THREAD VS PROCESS
+
+Process:
+• Owns resources
+• Larger
+• More complex
+• Higher overhead
+
+Thread:
+• Uses CPU
+• Smaller
+• Simpler
+• Lower overhead
+
+------------------------------------------------------------
+ADVANTAGE OF THREADS
+
+Manipulating threads is faster than manipulating processes.
+
+Benefits:
+• Faster execution
+• Lower overhead
+• Better responsiveness
+• More efficient CPU usage
+
+------------------------------------------------------------
+MULTITHREADING
+
+Multithreading allows a single application to use multiple threads simultaneously.
+
+------------------------------------------------------------
+HOW MULTITHREADING WORKS
+
+Step 1: One process is created.
+Step 2: Multiple threads are created inside the process.
+Step 3: Each thread performs a separate task.
+Step 4: Threads execute concurrently.
+
+------------------------------------------------------------
+WEB BROWSER EXAMPLE
+
+A web browser may use: 
+Thread 1: Retrieve web pages
+Thread 2: Download images
+Thread 3: Send email
+Thread 4: Receive email
+
+All threads operate at the same time.
+
+------------------------------------------------------------
+BENEFITS OF MULTITHREADING
+
+• Faster response time
+• Better resource sharing
+• Lower overhead
+• Improved multitasking
+• Better CPU utilization
+
+------------------------------------------------------------
+OPERATING SYSTEM SUPPORT
+
+Some operating systems support:
+• Multiple Processes With One Thread Each
+
+Other operating systems support:
+• Multiple Processes With Multiple Threads Each
+
+------------------------------------------------------------
+OBJECT-ORIENTED DESIGN
+
+Object-Oriented Design improved operating system efficiency and flexibility.
+
+------------------------------------------------------------
+KERNEL
+
+The Kernel is the core part of the operating system.
+It remains in memory at all times.
+
+------------------------------------------------------------
+FUNCTIONS OF THE KERNEL
+
+• Process Scheduling
+• Memory Management
+• Resource Allocation
+• Essential System Services
+
+------------------------------------------------------------
+KERNEL PROTECTION
+
+The kernel is protected from user modification.
+Users cannot directly alter important kernel components.
+
+------------------------------------------------------------
+EARLY OPERATING SYSTEM DESIGN
+
+Earlier operating systems loaded the entire operating system into memory.
+
+This included:
+• Memory Management
+• Process Scheduling
+• Device Management
+• File Management
+
+------------------------------------------------------------
+PROBLEMS WITH EARLY DESIGN
+
+• Difficult to modify
+• Difficult to upgrade
+• Large memory usage
+• Time-consuming maintenance
+
+------------------------------------------------------------
+MODERN OPERATING SYSTEM DESIGN
+
+Modern operating systems keep only essential components in memory.
+
+Examples:
+• Process Scheduling
+• Memory Allocation
+
+Other functions are loaded when needed.
+
+Examples:
+• Device Management Modules
+• File Management Modules
+• Networking Modules
+
+------------------------------------------------------------
+ADVANTAGES OF MODERN DESIGN
+
+• Uses less memory
+• Easier maintenance
+• Easier upgrades
+• Better flexibility
+• Improved efficiency
+
+------------------------------------------------------------
+OBJECTS
+
+Objects are reusable software modules.
+An object represents a specific function or real-world component.
+
+------------------------------------------------------------
+CHARACTERISTICS OF OBJECTS
+
+• Self-contained
+• Reusable
+• Independent
+• Easy to modify
+
+------------------------------------------------------------
+ADVANTAGES OF OBJECT-ORIENTED DESIGN
+
+• Easier customization
+• Easier debugging
+• Easier maintenance
+• Faster software development
+• Greater reliability
+
+------------------------------------------------------------
+MODULAR DESIGN
+
+Modern operating systems use a modular design.
+Each module performs a specific task.
+
+Examples:
+• Memory Module
+• File Module
+• Device Module
+• Network Module
+
+------------------------------------------------------------
+HOW MODULAR DESIGN WORKS
+
+Step 1: Kernel remains in memory.
+Step 2: Operating system requests a service.
+Step 3: Required module is loaded.
+Step 4: Task is completed.
+Step 5: Module can be removed when no longer needed.
+
+------------------------------------------------------------
+QUICK SUMMARY
+
+Job → Collection of work submitted by a user
+Process → Program currently being executed
+Thread → Smallest execution unit inside a process
+Heavyweight Process → Large process owning resources
+Lightweight Process (Thread) → Small execution unit using CPU
+
+Multithreading → Multiple threads executing within one process
+Benefits:
+• Faster execution
+• Lower overhead
+• Better responsiveness
+
+Kernel → Core part of the operating system
+Functions:
+• Process Scheduling
+• Memory Management
+• Resource Allocation
+
+Object-Oriented Design → Uses reusable software modules called objects
+Benefits:
+• Easier maintenance
+• Easier upgrades
+• Better flexibility
+• Improved efficiency
+
+------------------------------------------------------------
+
