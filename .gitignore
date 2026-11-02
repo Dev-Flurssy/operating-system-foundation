@@ -8,6 +8,7 @@ __pycache__/
 .lab/
 jupyterlab-workspaces/
 *.jupyterlab-workspace
+*.jupyterlab-workspaces
 
 venv/
 .venv/
