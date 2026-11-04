@@ -158,8 +158,6 @@ Compaction allowed Job 6 to execute.
 ------------------------------------------------------------
 RELOCATION
 
-Definition:
-
 Relocation is the process of moving a program from one memory location to another.
 
 Problem:
@@ -211,7 +209,6 @@ ADDRESS FLAGGING
 
 
 Before relocation, the operating system identifies all memory addresses.
-
 These addresses are marked (flagged).
 
 Example from Figure 2.8

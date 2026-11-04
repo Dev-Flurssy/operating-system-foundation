@@ -1,0 +1,487 @@
+PAGED MEMORY ALLOCATION
+
+In previous memory allocation schemes:
+• Programs had to be stored contiguously
+• Entire programs had to be loaded into memory
+• Fragmentation was a major problem
+
+Paged Memory Allocation solves the contiguous storage problem.
+Paged Memory Allocation divides a program into equal-sized pieces called Pages.
+These pages are loaded into equal-sized memory locations called Page Frames.
+
+Key Idea:
+Program → Pages
+Memory → Page Frames
+Pages can be stored anywhere in memory.
+They do NOT have to be next to each other.
+
+Advantages:
+• Better memory utilization
+• No external fragmentation
+• Programs do not require contiguous storage
+• Memory can be shared more efficiently
+
+Disadvantages:
+• Requires additional tables
+• More overhead
+• Address translation is required
+• Internal fragmentation can still occur in the last page
+
+------------------------------------------------------------
+PAGES AND PAGE FRAMES
+
+Page: A fixed-size piece of a program.
+Page Frame: A fixed-size block in main memory.
+
+Rule:
+Page Size = Page Frame Size
+
+Example:
+Program Size = 350 bytes
+Page Size = 100 bytes
+
+Pages Created:
+Page 0 = Bytes 0 - 99
+Page 1 = Bytes 100 - 199
+Page 2 = Bytes 200 - 299
+Page 3 = Bytes 300 - 349
+Total Pages = 4
+
+------------------------------------------------------------
+FIGURE 3.1 EXPLANATION
+
+Job 1 Size = 350 bytes
+Page Size = 100 bytes
+
+Since:
+350 ÷ 100 = 3 pages + 50 bytes
+
+The operating system creates:
+Page 0 = First 100 bytes
+Page 1 = Second 100 bytes
+Page 2 = Third 100 bytes
+Page 3 = Remaining 50 bytes
+
+Memory Allocation:
+Page 0 → Page Frame 8
+Page 1 → Page Frame 10
+Page 2 → Page Frame 5
+Page 3 → Page Frame 11
+
+Notice:
+The pages are not stored together.
+Page 0 is in Frame 8.
+Page 1 is in Frame 10.
+Page 2 is in Frame 5.
+Page 3 is in Frame 11.
+
+This demonstrates Non-Contiguous Storage.
+The operating system can place any page into any available page frame.
+
+Another observation:
+There are empty page frames between some of the pages.
+This is not a problem because the PMT keeps track of where every page is stored.
+
+------------------------------------------------------------
+INTERNAL FRAGMENTATION IN PAGING
+
+Internal Fragmentation still exists.
+However, it only occurs in the final page.
+
+Example:
+Page Size = 100 bytes
+Last Page Contains:
+Bytes 300 - 349
+Total Bytes Used = 50
+Space Available = 100
+
+Unused Space:
+100 - 50 = 50 bytes
+
+Therefore:
+Internal Fragmentation = 50 bytes
+All other pages are completely full.
+
+------------------------------------------------------------
+NO EXTERNAL FRAGMENTATION
+
+In Dynamic Partitions:
+Free memory becomes scattered.
+This causes External Fragmentation.
+
+In Paging:
+Every page frame has the same size.
+Any page can use any available frame.
+
+Therefore:
+External Fragmentation is eliminated.
+
+------------------------------------------------------------
+THREE IMPORTANT TABLES
+
+The operating system keeps track of pages using three tables:
+1. Job Table (JT)
+2. Page Map Table (PMT)
+3. Memory Map Table (MMT)
+
+All three tables are stored in the part of memory reserved for the operating system.
+
+------------------------------------------------------------
+JOB TABLE (JT)
+
+Purpose:
+Tracks active jobs.
+
+Contents:
+• Job Size
+• PMT Location
+
+Example:
+Job Size = 400
+PMT Location = 3096
+
+Meaning:
+This job contains 400 bytes.
+Its Page Map Table starts at memory location 3096.
+
+------------------------------------------------------------
+TABLE 3.1 EXPLANATION
+
+Initial Job Table:
+Job 1
+Size = 400
+PMT Location = 3096
+
+Job 2
+Size = 200
+PMT Location = 3100
+
+Job 3
+Size = 500
+PMT Location = 3150
+
+Later:
+Job 2 finishes.
+Its entry is removed.
+
+The table now contains:
+Job 1 = 400
+Job 3 = 500
+Then a new job arrives.
+
+New Job:
+Size = 700
+PMT Location = 3100
+
+Notice:
+The operating system reuses the free slot created when Job 2 completed.
+Key Point: The Job Table grows when jobs enter and shrinks when jobs leave.
+
+------------------------------------------------------------
+PAGE MAP TABLE (PMT)
+
+Shows where each page is stored.
+The PMT connects:
+Page Number → Page Frame Number
+
+Without the PMT, the operating system would not know where the pages are located.
+
+------------------------------------------------------------
+TABLE 3.2 EXPLANATION
+
+PMT for Job 1
+
+Page 0 → Frame 8
+Page 1 → Frame 10
+Page 2 → Frame 5
+Page 3 → Frame 11
+
+Meaning:
+The first page of the program is stored in Frame 8.
+The second page is stored in Frame 10.
+The third page is stored in Frame 5.
+The fourth page is stored in Frame 11.
+
+Important:
+The hardware performs the address calculations.
+The operating system maintains the PMT and other memory tables.
+
+------------------------------------------------------------
+MEMORY MAP TABLE (MMT)
+
+Tracks every page frame in memory.
+
+Shows:
+• Frame Number
+• Memory Location
+• Free or Busy Status
+
+Function:
+Helps the operating system find available page frames.
+
+------------------------------------------------------------
+DISPLACEMENT (OFFSET)
+
+The displacement is the position of a byte inside its page.
+It tells us how far that byte is from the beginning of the page.
+
+Formula: Displacement = Remainder
+
+Example:
+Byte 214
+Page Size = 100
+214 ÷ 100
+= 2 remainder 14
+
+Therefore:
+Page Number = 2
+Displacement = 14
+
+Meaning:
+Byte 214 is located:
+14 positions from the beginning of Page 2.
+
+------------------------------------------------------------
+FIGURE 3.2 EXPLANATION
+
+Job Size = 350 bytes
+Page Size = 100 bytes
+
+Pages:
+Page 0 = Bytes 0 - 99
+Page 1 = Bytes 100 - 199
+Page 2 = Bytes 200 - 299
+Page 3 = Bytes 300 - 349
+
+Notice:
+Each page starts counting displacement from 0.
+
+Examples:
+Byte 0
+Page = 0
+
+Displacement = 0
+Byte 99
+Page = 0
+
+Displacement = 99
+Byte 100
+Page = 1
+
+Displacement = 0
+Byte 199
+Page = 1
+
+Displacement = 99
+Byte 200
+Page = 2
+
+Displacement = 0
+Byte 299
+Page = 2
+
+Displacement = 99
+Byte 300
+Page = 3
+
+Displacement = 0
+Byte 349
+Page = 3
+
+Displacement = 49
+Important: The first byte in any page always has displacement 0.
+
+The last byte in a 100-byte page always has displacement 99.
+
+Examples:
+Byte 125
+125 ÷ 100
+= 1 remainder 25
+
+Page = 1
+Displacement = 25
+Byte 214
+214 ÷ 100
+= 2 remainder 14
+
+Page = 2
+Displacement = 14
+Byte 349
+349 ÷ 100
+= 3 remainder 49
+
+Page = 3
+Displacement = 49
+
+Key Point:
+Quotient = Page Number
+Remainder = Displacement
+
+------------------------------------------------------------
+HOW TO FIND PAGE NUMBER
+
+Formula:
+Page Number = Byte Number ÷ Page Size
+Displacement = Remainder
+
+Long-Division Example:
+
+          2
+      --------
+100 ) 214
+      200
+      ---
+       14
+
+Answer:
+Page Number = 2
+Displacement = 14
+
+Another Example:
+384 ÷ 256
+= 1 remainder 128
+
+Answer:
+Page Number = 1
+Displacement = 128
+
+Important Rule:
+Page Number = Quotient
+Displacement = Remainder
+
+------------------------------------------------------------
+ADDRESS TRANSLATION
+
+Address Translation converts:
+Logical Address into Physical Address
+
+Logical Address:
+Address relative to the program.
+
+Physical Address:
+Actual location in main memory.
+
+Every memory access uses address translation.
+Also Called:
+• Address Resolution
+• Address Mapping
+
+------------------------------------------------------------
+STEPS OF ADDRESS TRANSLATION
+
+Example:
+Find Byte 214
+Page Size = 100
+
+PMT:
+Page 0 → Frame 8
+Page 1 → Frame 10
+Page 2 → Frame 5
+Page 3 → Frame 11
+
+Step 1: Determine the page number.
+214 ÷ 100
+= 2 remainder 14
+Page Number = 2
+Displacement = 14
+
+Step 2: Look in the PMT.
+Page 2 → Frame 5
+
+Step 3: Find the starting address of Frame 5.
+Frame Number × Page Size
+5 × 100
+= 500
+
+Step 4: Add the displacement.
+500 + 14
+= 514
+
+Answer:
+Byte 214 is stored at Memory Address 514.
+
+------------------------------------------------------------
+FIGURE 3.3 EXPLANATION
+
+This figure demonstrates a complete address translation process.
+
+Job 1 contains:
+Byte 518
+
+Instruction:
+LOAD R1, 518
+
+Meaning:
+Load the value stored at Byte 518 into Register 1.
+
+PMT for Job 1:
+Page 0 → Frame 5
+Page 1 → Frame 3
+Page Size = 512 bytes
+
+Step 1: Find Page Number.
+518 ÷ 512
+= 1 remainder 6
+Page Number = 1
+Displacement = 6
+
+Step 2: Look in the PMT.
+Page 1 → Frame 3
+
+Step 3: Find the starting address of Frame 3.
+3 × 512
+= 1536
+
+Step 4: Add the displacement.
+1536 + 6
+= 1542
+
+Final Answer:
+Byte 518 is located at Memory Address 1542.
+
+Therefore:
+Memory Location 1542 contains the value that will be loaded into Register 1.
+
+Notice:
+Logical Address = 518
+Physical Address = 1542
+The PMT is what allows the operating system to convert the logical address into the physical address.
+
+------------------------------------------------------------
+ADDRESS RESOLUTION
+
+Address Resolution is the process of converting a logical address into a physical address.
+Also Called:
+• Address Translation
+• Address Mapping
+
+Important: The hardware performs the division and arithmetic.
+
+The operating system maintains:
+• JT
+• PMT
+• MMT
+
+These tables are used during address translation.
+
+------------------------------------------------------------
+ADVANTAGES OF PAGING
+
+• No External Fragmentation
+• Better memory utilization
+• Programs do not need contiguous memory
+• Efficient use of memory
+• More jobs can fit into memory
+• Foundation of Virtual Memory
+
+------------------------------------------------------------
+DISADVANTAGES OF PAGING
+
+• Requires PMTs
+• Requires JTs
+• Requires MMTs
+• More operating system overhead
+• Address translation required
+• Internal Fragmentation still exists in the final page
+
+------------------------------------------------------------
