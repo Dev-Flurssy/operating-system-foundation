@@ -1,0 +1,411 @@
+RELOCATABLE DYNAMIC PARTITIONS
+
+Both Fixed Partitions and Dynamic Partitions suffer from fragmentation.
+
+Fixed Partitions:
+• Internal Fragmentation
+
+Dynamic Partitions:
+• External Fragmentation
+
+As the system continues running, memory becomes filled with small unusable pieces called fragments.
+To solve this problem, operating systems introduced Relocatable Dynamic Partitions.
+
+----------------------------
+Definition:
+
+Relocatable Dynamic Partitions allow the operating system to move programs around in memory 
+so that scattered free spaces can be combined into one large free block.
+Move programs → Combine free spaces → Create one large free block
+
+Advantages:
+• Reduces External Fragmentation
+• Better memory utilization
+• More jobs can enter memory
+• Improves system throughput
+
+Disadvantages:
+• Requires relocation
+• Requires compaction
+• Creates operating system overhead
+• Takes CPU time
+
+------------------------------------------------------------
+COMPACTION
+
+Compaction is the process of moving jobs closer together so all free spaces become one large free block.
+
+Other Names:
+• Garbage Collection
+• Defragmentation
+
+Purpose:
+Eliminate External Fragmentation.
+
+----------------------------
+Example:
+Before Compaction
+Job 1
+Free 12K
+Job 2
+Free 30K
+Job 3
+Free 54K
+
+Total Free Memory:
+12K + 30K + 54K = 96K
+
+Problem:
+The memory is scattered.
+
+After Compaction
+Job 1
+Job 2
+Job 3
+Free 96K
+
+Result:
+One large contiguous free block is created.
+
+------------------------------------------------------------
+EXAMPLE 
+
+Before Compaction
+
+Memory Layout:
+Operating System = 10K
+Job 1 = 8K
+
+Free Space = 12K
+Job 4 = 32K
+
+Free Space = 30K
+Job 2 = 16K
+
+Job 5 = 48K
+Free Space = 54K
+Job 6 = 84K (Waiting)
+
+Total Free Memory:
+12K + 30K + 54K
+= 96K
+
+Question:
+Why can't Job 6 enter?
+
+Answer:
+Job 6 needs 84K contiguous memory.
+Although 96K is free, it is scattered.
+
+Available blocks:
+12K
+30K
+54K
+
+None is large enough individually.
+Therefore Job 6 must wait.
+
+----------------------------
+After Compaction
+
+The operating system moves jobs closer together.
+
+Before:
+Job 1
+Free
+Job 4
+Free
+Job 2
+Job 5
+Free
+
+After:
+Job 1
+Job 4
+Job 2
+Job 5
+Large Free Block
+
+All free spaces become contiguous.
+Total Free Block:
+96K
+
+External Fragmentation disappears.
+
+----------------------------
+Loading Job 6
+
+Job 6 requires:
+84K
+
+Available:
+96K contiguous
+
+Therefore:
+Job 6 enters memory successfully.
+
+Memory now contains:
+Operating System
+Job 1
+Job 4
+Job 2
+Job 5
+Job 6
+
+Result:
+Compaction allowed Job 6 to execute.
+
+------------------------------------------------------------
+RELOCATION
+
+Definition:
+
+Relocation is the process of moving a program from one memory location to another.
+
+Problem:
+When a program is moved, all memory addresses inside the program must also be adjusted.
+
+Why?
+Because the addresses still point to the old memory locations.
+
+Without address adjustment:
+• Data may not be found
+• Wrong instructions may execute
+• Program may crash
+
+------------------------------------------------------------
+ADDRESS VS DATA VALUE
+
+The operating system must distinguish between:
+Addresses
+and
+Data Values
+
+Only addresses are changed during relocation.
+Data values remain unchanged.
+
+----------------------------
+Example:
+
+Instruction:
+LOAD 4, ANSWER
+
+Meaning:
+Load data called ANSWER into Register 4.
+
+Suppose:
+ANSWER = 37
+
+Address of ANSWER = 53248
+
+During relocation:
+The address changes.
+The value 37 does not.
+
+Important:
+Addresses move.
+Data values stay the same.
+
+------------------------------------------------------------
+ADDRESS FLAGGING
+
+
+Before relocation, the operating system identifies all memory addresses.
+
+These addresses are marked (flagged).
+
+Example from Figure 2.8
+
+Addresses are shown with apostrophes:
+'1
+'2
+'3
+'4
+
+These marks tell the Memory Manager:
+"Adjust this value when the program is relocated."
+Numbers without marks are data values or instruction codes and must not be changed.
+
+Key Point: Only flagged addresses are modified.
+
+------------------------------------------------------------
+RELOCATION REGISTER
+
+A relocation register stores the amount by which a program has moved.
+
+Formula:
+New Address =
+Old Address + Relocation Register
+
+If the relocation register is:
+0
+The program has not moved.
+
+If the relocation register is:
+-12288
+Every address must be reduced by 12288.
+
+------------------------------------------------------------
+BOUNDS REGISTER
+
+The bounds register protects memory.
+
+Purpose:
+Store the highest or lowest memory address a program can access.
+
+Benefits:
+• Prevents access to other programs
+• Protects the operating system
+• Prevents memory violations
+
+Exam Tip:
+Relocation Register → Used when moving programs
+Bounds Register → Used for memory protection
+
+------------------------------------------------------------
+RELOCATION REGISTER EXAMPLE
+
+Original Situation
+Job 4 starts at:
+30K
+
+Convert to bytes:
+30 × 1024
+= 30720
+
+Job Size:
+32K
+
+Convert to bytes:
+32 × 1024
+= 32768
+
+Ending Address:
+30720 + 32768
+= 63488
+
+Therefore Job 4 occupies:
+30720 to 63487
+
+Original Instruction
+Location:
+31744
+
+Instruction:
+LOAD 4, ANSWER
+
+ANSWER is stored at:
+53248
+
+Value of ANSWER:
+37
+
+------------------------------------------------------------
+AFTER COMPACTION
+
+Job 4 is moved.
+New Starting Address:
+18K
+
+Convert to bytes:
+18 × 1024
+= 18432
+
+Amount Moved:
+30720 - 18432
+= 12288
+
+Relocation Register:
+-12288
+Negative because the program moved toward lower addresses.
+
+------------------------------------------------------------
+ADJUSTING THE ADDRESSES
+
+Original Instruction Address:
+31744
+
+New Address:
+31744 - 12288
+= 19456
+
+Original Data Address:
+53248
+
+New Address:
+53248 - 12288
+= 40960
+
+Therefore:
+Before Relocation
+Instruction at:
+31744
+
+Data at:
+53248
+
+After Relocation
+Instruction at:
+19456
+Data at:
+40960
+
+Value still:
+37
+
+Notice:
+Address changed.
+Data did not.
+
+------------------------------------------------------------
+WHY IS RELOCATION NECESSARY?
+
+Without relocation:
+Instruction would still look for:
+53248
+
+But the data is no longer there.
+The data moved to:
+40960
+
+Result:
+Program fails.
+Relocation ensures all address references remain correct after movement.
+
+------------------------------------------------------------
+WHEN SHOULD COMPACTION OCCUR?
+
+There are three possible approaches.
+
+----------------------------
+Option 1: Compact when memory becomes heavily used.
+
+Example:
+75% memory utilization.
+
+Advantage:
+Simple.
+
+Disadvantage:
+Compaction may occur when nobody is waiting.
+
+----------------------------
+Option 2: Compact only when jobs are waiting.
+
+Advantage:
+Compaction occurs when needed.
+
+Disadvantage:
+The system must constantly check waiting queues.
+
+----------------------------
+Option 3: Compact after a fixed time interval.
+
+Advantage:
+Predictable.
+
+Disadvantage:
+If done too frequently, overhead increases.
+If done too rarely, jobs wait too long.
+
+------------------------------------------------------------

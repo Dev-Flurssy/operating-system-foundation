@@ -1,0 +1,354 @@
+DEALLOCATION OF MEMORY
+
+Until now, we have focused on allocating memory to jobs.
+Eventually jobs finish execution and their memory must be released.
+This process is called Deallocation.
+
+Definition:
+Deallocation is the process of returning occupied memory back to the free memory list.
+
+Importance:
+• Makes memory available for new jobs
+• Prevents memory from becoming full
+• Improves memory utilization
+• Helps support multiprogramming
+
+Exam Tip:
+Allocation = Give memory to a job
+Deallocation = Return memory from a job
+
+------------------------------------------------------------
+FIXED PARTITION DEALLOCATION
+
+In a Fixed Partition system, deallocation is simple.
+
+When a job finishes:
+Step 1: Locate the partition.
+Step 2: Change its status from Busy to Free.
+Step 3: Update the memory table.
+
+Example:
+Before:
+Partition 3 = Busy
+
+After:
+Partition 3 = Free
+
+Nothing else needs to be changed because partition sizes never change.
+
+------------------------------------------------------------
+DYNAMIC PARTITION DEALLOCATION
+
+In a Dynamic Partition system, deallocation is more complicated.
+
+Reason:
+Memory blocks have different sizes.
+When a job finishes, the operating system tries to combine neighbouring free blocks.
+This helps reduce External Fragmentation.
+
+The Memory Manager checks three possible situations:
+Case 1: The released block touches ONE free block.
+Case 2: The released block is BETWEEN TWO free blocks.
+Case 3: The released block touches NO free block.
+
+------------------------------------------------------------
+CASE 1 - JOINING TWO FREE BLOCKS
+
+Original Situation 
+Free List:
+Address 4075 → Size 105
+Address 5225 → Size 5
+Address 6785 → Size 600
+Address 7560 → Size 20
+
+Busy Job:
+Address 7600 → Size 200
+
+Free Block:
+Address 7800 → Size 5
+
+Address 10250 → Size 4050
+Address 15125 → Size 230
+Address 24500 → Size 1000
+
+Memory Layout:
+7560 --------> 20 Free
+7600 --------> 200 Busy
+7800 --------> 5 Free
+
+Notice:
+The busy job starts at 7600.
+Its size is 200.
+
+Therefore:
+7600 + 200 = 7800
+This proves the busy job is directly beside the free block beginning at 7800.
+
+----------------------------
+When the job finishes:
+Released Block:
+Address = 7600
+Size = 200
+
+The system combines:
+200 + 5
+
+New Size:
+205
+
+New Free Block:
+Address = 7600
+Size = 205
+
+Why 7600?
+The merged block begins from the lowest address.
+
+----------------------------
+Final Free List 
+Address 7600 → Size 205 Free
+
+Calculation:
+200 + 5 = 205
+
+Result:
+Two neighbouring blocks become one larger free block.
+
+------------------------------------------------------------
+CASE 2 - JOINING THREE FREE BLOCKS
+
+Original Situation 
+Free Block:
+Address 7560 → Size 20
+
+Busy Job:
+Address 7580 → Size 20
+
+Free Block:
+Address 7600 → Size 205
+
+Memory Layout:
+7560 --------> 20 Free
+7580 --------> 20 Busy
+7600 --------> 205 Free
+
+How do we know?
+First Free Block:
+7560 + 20 = 7580
+Busy Job starts exactly where first free block ends.
+
+Busy Job:
+7580 + 20 = 7600
+Second Free Block starts exactly where busy job ends.
+
+Therefore:
+Free → Busy → Free
+Three consecutive blocks exist.
+
+----------------------------
+When the middle job finishes:
+Combine:
+20 + 20 + 205
+
+Calculation:
+20 + 20 + 205 = 245
+
+The new merged block starts at the smallest address:
+7560
+
+New Entry:
+Address = 7560
+Size = 245
+
+The old entry at 7600 is removed.
+Instead of deleting the row, the operating system creates:
+
+----------------------------
+Null Entry
+
+Address 7560 → Size 245
+
+Address 10250 → Size 4050
+
+Why Null Entry?
+Deleting rows would require moving every record.
+A null entry keeps the table organized and saves processing time.
+
+------------------------------------------------------------
+CASE 3 - ISOLATED BLOCK
+
+This is the most interesting case.
+The finished job is not beside any free block.
+
+Original Free List 
+Address 4075 → 105
+Address 5225 → 5
+Address 6785 → 600
+Address 7560 → 245
+
+Null Entry
+Address 10250 → 4050
+Address 15125 → 230
+Address 24500 → 1000
+
+Busy List 
+Address 7805 → 1000 Busy
+Address 8805 → 445 Busy
+Address 9250 → 1000 Busy
+
+Notice:
+The job to be released:
+Address = 8805
+Size = 445
+
+Memory Layout:
+Busy
+7805 → 1000
+Busy
+8805 → 445
+Busy
+9250 → 1000
+
+There is NO free block touching the 445 block.
+
+------------------------------------------------------------
+Therefore:
+No merging can occur.
+
+Step 1: The job finishes.
+Step 2: Find a null entry in the Free List.
+Step 3: Insert:
+Address = 8805
+Size = 445
+Status = Free
+Step 4:  Remove job from Busy List.
+Busy List becomes:
+7805 → 1000 Busy
+Null Entry
+9250 → 1000 Busy
+Step 5: Update Free List.
+New Free List:
+8805 → 445 Free
+
+Result:
+The block is simply added to the Free List because no neighbouring free block exists.
+
+------------------------------------------------------------
+HOW ARE THE TABLE VALUES CALCULATED?
+
+Rule: Ending Address = Beginning Address + Block Size
+
+----------------------------
+Example 1
+Beginning Address = 7600
+Size = 200
+Ending Address:
+7600 + 200 = 7800
+
+Therefore next block starts at 7800.
+
+----------------------------
+Example 2
+Beginning Address = 7560
+Size = 20
+Ending Address:
+7560 + 20 = 7580
+
+Therefore next block starts at 7580.
+
+----------------------------
+Example 3
+Beginning Address = 7580
+Size = 20
+Ending Address:
+7580 + 20 = 7600
+
+Therefore next block starts at 7600.
+This is how the book determines whether blocks are adjacent.
+
+------------------------------------------------------------
+HOW DOES THE SYSTEM KNOW BLOCKS ARE ADJACENT?
+
+Rule: If
+Address A + Size A = Address B
+Then the two blocks touch.
+
+----------------------------
+Example:
+7600 + 200 = 7800
+The next block starts at 7800.
+Therefore:
+The blocks are adjacent.
+
+----------------------------
+Example:
+7560 + 20 = 7580
+Adjacent.
+
+----------------------------
+Example:
+7580 + 20 = 7600
+Adjacent.
+
+When blocks are adjacent they can be merged.
+
+------------------------------------------------------------
+WHEN DO WE MERGE?
+
+One Free Block + Released Block
+Merge Two Blocks
+
+----------------------------
+Example:
+200 + 5 = 205
+Two Free Blocks + Released Block
+Merge Three Blocks
+
+----------------------------
+Example:
+20 + 20 + 205 = 245
+No Adjacent Free Blocks
+No Merge
+Just insert a new Free entry.
+
+------------------------------------------------------------
+NULL ENTRY
+
+An empty table row reserved for future use.
+
+Purpose:
+• Avoids moving rows
+• Simplifies insertion
+• Keeps list ordered by address
+
+Example:
+Address = Null
+Size = Null
+Status = Null Entry
+
+When a block becomes free, this row can be reused.
+
+------------------------------------------------------------
+EXAM SUMMARY
+
+Case 1
+• Released block next to one free block
+• Merge two blocks
+
+Case 2
+• Released block between two free blocks
+• Merge three blocks
+
+Case 3
+• Released block isolated
+• No merging
+• Create a new free entry
+
+Adjacent Test:
+Beginning Address + Size = Next Beginning Address
+
+Null Entry:
+Empty row used to avoid reorganizing the table
+Main Goal of Deallocation:
+Reduce External Fragmentation and make memory available for future jobs.
+
+------------------------------------------------------------

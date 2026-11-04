@@ -1,0 +1,340 @@
+BEST-FIT VS FIRST-FIT ALLOCATION
+
+When jobs arrive in memory, the operating system must decide where to place them.
+
+To do this, the Memory Manager keeps two lists:
+Free List:
+Contains all available memory blocks.
+Busy List:
+Contains all occupied memory blocks.
+
+For every new job, the operating system searches the free list and allocates memory using either:
+• First-Fit Allocation
+• Best-Fit Allocation
+
+The main difference is:
+First-Fit → Faster
+Best-Fit → More memory efficient
+
+Exam Tip:
+If you optimize speed, you may waste memory.
+If you optimize memory, allocation becomes slower.
+
+------------------------------------------------------------
+FIRST-FIT ALLOCATION
+
+First-Fit allocates a job to the first memory block large enough to hold it.
+The search stops as soon as a suitable block is found.
+
+Memory List Organization:
+The memory list is organized by memory location (address order).
+
+Advantages:
+• Fast allocation
+• Simple implementation
+• Less searching required
+
+Disadvantages:
+• Can waste memory
+• May prevent large jobs from entering memory
+• More fragmentation
+
+------------------------------------------------------------
+EXAMPLE
+
+Jobs:
+J1 = 10K
+J2 = 20K
+J3 = 30K
+J4 = 10K
+
+Memory Blocks:
+30K
+15K
+50K
+20K
+
+----------------------------
+Step 1:
+J1 needs 10K.
+First suitable block = 30K
+J1 is loaded.
+
+Unused Memory:
+30K - 10K = 20K wasted
+
+Step 2:
+J2 needs 20K.
+15K is too small.
+Next block is 50K.
+J2 is loaded into 50K.
+
+Unused Memory:
+50K - 20K = 30K wasted
+
+Step 3:
+J3 needs 30K.
+Remaining free blocks:
+15K
+20K
+
+Neither is large enough.
+J3 must wait.
+
+Step 4:
+J4 needs 10K.
+15K block is available.
+J4 enters.
+
+Unused Memory:
+15K - 10K = 5K wasted
+
+Result:
+J1 = Running
+J2 = Running
+J4 = Running
+J3 = Waiting
+
+Even though there is plenty of unused memory, J3 cannot enter because there is no free block of 30K.
+Key Point: First-Fit is fast but may lead to poor memory utilization.
+
+------------------------------------------------------------
+BEST-FIT ALLOCATION
+
+Best-Fit allocates a job to the smallest memory block that can hold it.
+The goal is to minimize wasted memory.
+
+Memory List Organization:
+The memory list is organized by block size, from smallest to largest.
+
+Advantages:
+• Better memory utilization
+• Less wasted space
+• More jobs can enter memory
+
+Disadvantages:
+• Slower
+• Must search more blocks
+• More overhead
+
+------------------------------------------------------------
+EXAMPLE 
+
+Jobs:
+J1 = 10K
+J2 = 20K
+J3 = 30K
+J4 = 10K
+
+Memory Blocks:
+15K
+20K
+30K
+50K
+
+----------------------------
+Allocation:
+J1 → 15K block
+Waste = 5K
+
+J2 → 20K block
+Waste = 0K
+
+J3 → 30K block
+Waste = 0K
+
+J4 → 50K block
+Waste = 40K
+
+Result:
+J1 = Running
+J2 = Running
+J3 = Running
+J4 = Running
+
+All jobs are loaded successfully.
+Key Point: Best-Fit uses memory more efficiently but requires more searching.
+
+------------------------------------------------------------
+BOOKSHELF 
+
+Imagine you own a library.
+The shelves represent memory blocks.
+Books represent jobs.
+
+----------------------------
+First-Fit:
+You place a book on the first available shelf that is large enough.
+
+Advantage:
+Fast.
+
+Disadvantage:
+You may waste large shelves on small books.
+
+----------------------------
+Best-Fit:
+You search for the shelf that fits the book most closely.
+
+Advantage:
+Less wasted shelf space.
+
+Disadvantage:
+Takes longer to find the best shelf.
+
+Key Idea:
+First-Fit optimizes speed.
+Best-Fit optimizes memory usage.
+
+------------------------------------------------------------
+FIRST-FIT ALGORITHM
+
+Step 1: Start at the first memory block.
+Step 2: Check whether the job fits.
+Step 3: If it does not fit, move to the next block.
+Step 4: If it fits, allocate the job.
+Step 5: Update free and busy lists.
+Step 6: Process the next job.
+
+If no block is large enough:
+Place the job in the waiting queue.
+
+------------------------------------------------------------
+BEST-FIT ALGORITHM
+
+Step 1: Search every free memory block.
+Step 2: Find all blocks large enough.
+Step 3: Choose the smallest suitable block.
+Step 4: Allocate the job.
+Step 5: Update free and busy lists.
+Step 6: Process the next job.
+
+If no block is large enough:
+Place the job in the waiting queue.
+
+------------------------------------------------------------
+FIRST-FIT EXAMPLE
+
+Memory Request = 200 spaces
+
+Available Blocks:
+Address 4075 = 105 spaces
+Address 5225 = 5 spaces
+Address 6785 = 600 spaces
+Address 7560 = 20 spaces
+Address 7600 = 205 spaces
+Address 10250 = 4050 spaces
+Address 15125 = 230 spaces
+Address 24500 = 1000 spaces
+
+----------------------------
+First-Fit begins searching from the top.
+105 → Too small
+5 → Too small
+600 → Large enough
+The 200-space job is placed here.
+
+Before:
+Address = 6785
+Size = 600
+
+After:
+Address = 6985
+Size = 400
+
+Reason:
+200 spaces were allocated.
+600 - 200 = 400 spaces remain.
+
+Key Point: First-Fit stops searching immediately after finding the first suitable block.
+
+------------------------------------------------------------
+BEST-FIT EXAMPLE
+
+Memory Request = 200 spaces
+
+Available Blocks:
+105
+5
+600
+20
+205
+4050
+230
+1000
+
+----------------------------
+Best-Fit searches the ENTIRE list.
+Suitable Blocks:
+600
+205
+4050
+230
+1000
+
+Smallest suitable block:
+205
+The block beginning at Address 7600 is selected.
+
+Before:
+Address = 7600
+Size = 205
+
+After:
+Address = 7800
+Size = 5
+
+Reason:
+205 - 200 = 5 spaces remain.
+
+This leaves less wasted memory than choosing the 600-space block.
+
+------------------------------------------------------------
+SLIVER
+
+A very small leftover memory block created after Best-Fit allocation.
+
+Example:
+205 - 200 = 5 spaces
+Remaining 5 spaces = Sliver
+
+Problem:
+Slivers are often too small to be useful.
+
+------------------------------------------------------------
+FIRST-FIT VS BEST-FIT
+
+First-Fit
+• Uses first suitable block
+• Faster
+• Less searching
+• More memory waste
+• Memory list ordered by location
+
+Best-Fit
+• Uses smallest suitable block
+• Slower
+• More searching
+• Better memory utilization
+• Memory list ordered by size
+
+EXAM COMPARISON
+------------------------------------------------------------
+
+First-Fit
+• Fast
+• Simple
+• May waste memory
+• Large jobs may wait
+
+Best-Fit
+• Efficient memory usage
+• Less waste
+• Slower allocation
+• May create small unusable fragments (slivers)
+
+Exam Shortcut:
+First-Fit → First block that fits
+Best-Fit → Best-sized block that fits
+First-Fit → Faster
+Best-Fit → More efficient
