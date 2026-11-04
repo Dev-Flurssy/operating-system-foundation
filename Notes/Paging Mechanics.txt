@@ -1,0 +1,472 @@
+THE MECHANICS OF PAGING
+
+Before the Memory Manager can decide which page should be removed, 
+it must know the condition of every page currently in memory.
+This information is stored in the Page Map Table (PMT).
+
+The PMT keeps track of:
+• Whether a page is in memory
+• Whether it was recently used
+• Whether its contents have been modified
+• Which page frame contains the page
+
+The PMT helps the operating system make intelligent page replacement decisions.
+
+------------------------------------------------------------
+PAGE MAP TABLE (PMT)
+
+Recall that Demand Paging added three important bits to every page entry:
+1. Status Bit
+2. Referenced Bit
+3. Modified Bit
+The PMT also stores:
+4. Page Frame Number
+
+Example (Table 3.3)
+
+Page 0
+Status Bit = 1
+Referenced Bit = 1
+Modified Bit = 1
+Page Frame = 5
+
+Meaning:
+Page 0 is in memory.
+Page 0 was recently referenced.
+Page 0 was modified.
+Page 0 is stored in Page Frame 5.
+
+------------------------------------------------------------
+TABLE 3.3 EXPLANATION
+
+PMT for Job 1
+
+Page 0
+Status = 1
+Referenced = 1
+Modified = 1
+Frame = 5
+
+Meaning:
+Page 0 is currently in memory, has been used recently, and its contents were changed.
+
+Page 1
+Status = 1
+Referenced = 0
+Modified = 0
+Frame = 9
+
+Meaning:
+Page 1 is in memory but has not been used recently and has not been modified.
+
+Page 2
+Status = 1
+Referenced = 0
+Modified = 0
+Frame = 7
+
+Meaning:
+Page 2 is also in memory, has not been used recently, and has not been modified.
+
+Page 3
+Status = 1
+Referenced = 1
+Modified = 0
+Frame = 12
+
+Meaning:
+Page 3 is in memory, was recently used, but has not been modified.
+
+Notice:
+All pages have:
+Status Bit = 1
+
+Reason:
+Only pages that are already in memory can be considered as candidates for removal.
+
+------------------------------------------------------------
+STATUS BIT
+
+Indicates whether a page is currently in memory.
+
+Values:
+0 = Not in memory
+1 = In memory
+
+Example:
+Status Bit = 0
+The page is still on disk.
+Status Bit = 1
+
+The page currently resides in memory.
+
+------------------------------------------------------------
+REFERENCED BIT
+
+Shows whether a page has been used recently.
+
+Values:
+0 = Not recently referenced
+1 = Recently referenced
+
+Importance: Used heavily by LRU and Clock page replacement algorithms.
+
+Example:
+Referenced Bit = 1
+The page was recently accessed.
+
+Referenced Bit = 0
+The page has not been accessed recently.
+
+------------------------------------------------------------
+MODIFIED BIT
+
+Shows whether page contents changed while in memory.
+
+Values:
+0 = Not modified
+1 = Modified
+
+Importance:
+Determines whether the page must be rewritten to disk when removed.
+
+------------------------------------------------------------
+WHY THE MODIFIED BIT IS IMPORTANT
+
+When a page enters memory:
+The original page remains on disk.
+The operating system copies the page rather than moving it.
+
+Therefore:
+Disk Copy = Original
+Memory Copy = Working Copy
+
+Case 1
+Modified Bit = 0
+Page was never changed.
+
+Result:
+The page already on disk is correct.
+No need to rewrite it.
+This saves time.
+
+Case 2
+Modified Bit = 1
+Page contents changed.
+
+Result:
+The updated version must overwrite the older copy on disk.
+This requires extra time.
+
+------------------------------------------------------------
+TABLE 3.4 EXPLANATION
+
+Status Bit
+0 = Not in memory
+1 = Resides in memory
+
+Modified Bit
+0 = Not modified
+1 = Was modified
+
+Referenced Bit
+0 = Not called recently
+1 = Was called recently
+
+These three bits provide the information needed by page replacement algorithms.
+
+------------------------------------------------------------
+TABLE 3.5 EXPLANATION
+
+Since Referenced Bit and Modified Bit can each be:
+0 or 1
+
+Four combinations are possible.
+Case 1
+Modified = 0
+Referenced = 0
+
+Meaning:
+Not Modified AND Not Referenced
+This is the BEST page to remove.
+
+Reason:
+• It hasn't been used recently.
+• It doesn't need to be saved.
+
+Case 2
+Modified = 0
+Referenced = 1
+
+Meaning:
+Not Modified BUT Referenced
+
+Reason:
+The page has been used recently.
+Therefore the operating system prefers to keep it.
+
+Case 3
+Modified = 1
+Referenced = 0
+
+Meaning:
+Modified BUT Not Referenced
+
+Reason:
+The page is inactive.
+However, it must be written back to disk before removal.
+
+Case 4
+Modified = 1
+Referenced = 1
+
+Meaning:
+Modified AND Referenced
+This is the WORST candidate for removal.
+
+Reason:
+• It is actively used.
+• It must be saved before removal.
+
+------------------------------------------------------------
+LRU CHOICE ORDER
+
+When the LRU policy searches for a page to remove:
+
+1st Choice
+Case 1
+Modified = 0
+Referenced = 0
+
+Reason:
+No save required and not recently used.
+
+2nd Choice
+Case 3
+Modified = 1
+Referenced = 0
+
+Reason:
+Not recently used but requires saving.
+
+3rd Choice
+Case 2
+Modified = 0
+Referenced = 1
+
+Reason:
+Recently used.
+4th Choice
+
+Case 4
+Modified = 1
+Referenced = 1
+
+Reason:
+Recently used and requires saving.
+
+Therefore:
+Best Candidate → Case 1
+Worst Candidate → Case 4
+
+------------------------------------------------------------
+WHY CASE 3 LOOKS STRANGE
+
+Case 3 says:
+Modified = 1
+Referenced = 0
+At first this seems impossible.
+
+Question:
+How can a page be modified without being referenced?
+
+Answer:
+Because the operating system periodically resets all Referenced Bits.
+
+Example:
+Page is actively used.
+Referenced Bit becomes:
+1
+
+Later:
+Operating System resets all Referenced Bits to:
+0
+
+Immediately after resetting:
+Page may still have:
+Modified = 1
+Referenced = 0
+
+This creates Case 3.
+
+------------------------------------------------------------
+WHY REFERENCE BITS ARE RESET
+
+Suppose all pages eventually become:
+Referenced = 1
+
+Then:
+Every page appears active.
+LRU would no longer know which pages are actually being used.
+
+To solve this problem:
+The operating system periodically resets Referenced Bits.
+
+Then:
+Recently used pages quickly return to:
+Referenced = 1
+
+Inactive pages remain:
+Referenced = 0
+This allows LRU to identify inactive pages.
+
+------------------------------------------------------------
+THE WORKING SET
+
+One of the most important Demand Paging concepts is the Working Set.
+A Working Set is the collection of pages currently needed by a program for efficient execution.
+These pages are present in memory and can be accessed without generating page faults.
+
+Key Idea: Working Set = Pages currently being used.
+
+------------------------------------------------------------
+HOW A WORKING SET DEVELOPS
+
+Step 1
+Program starts.
+Only a few pages are loaded.
+
+Step 2
+Execution continues.
+More page faults occur.
+Additional pages enter memory.
+
+Step 3
+Eventually most frequently used pages become loaded.
+
+Step 4
+The program reaches a stable state.
+Very few additional page faults occur.
+
+At this point:
+The Working Set is in memory.
+
+------------------------------------------------------------
+LOCALITY OF REFERENCE
+
+Working Sets exist because programs do not use all pages equally.
+Programs usually use only a small portion of their pages at any given time.
+This behavior is called: Locality of Reference.
+
+Definition:
+During a particular phase of execution, a program accesses only a small portion of its pages repeatedly.
+
+------------------------------------------------------------
+EXAMPLES OF LOCALITY OF REFERENCE
+
+Loops
+A loop may execute 1000 times.
+Only the pages containing the loop instructions are repeatedly accessed.
+Pages outside the loop remain unused.
+
+Subroutines
+During a subroutine call:
+Only pages belonging to that subroutine are heavily referenced.
+
+Sequential Execution
+Nearby instructions are typically executed together.
+
+Arrays and Tables
+Only a small section of a large array may be actively used at one time.
+
+------------------------------------------------------------
+BENEFITS OF A WORKING SET
+
+If all pages of the Working Set are already in memory:
+• Fewer page faults
+• Less swapping
+• Faster execution
+• Better CPU utilization
+
+------------------------------------------------------------
+WORKING SET CHALLENGES
+
+The operating system must answer difficult questions:
+• How many pages belong to the Working Set?
+• How large should a Working Set be?
+• How many Working Sets can fit into memory simultaneously?
+
+These decisions become more difficult in:
+• Multi-user systems
+• Time-sharing systems
+• Networked systems
+
+------------------------------------------------------------
+FIGURE 3.12 EXPLANATION
+
+Figure 3.12 demonstrates the cost of page faults.
+Program Execution Time:
+30 ms
+
+Page Wait Time: 300 ms
+
+Sequence:
+Execute Program: 30 ms
+Wait for Page: 300 ms
+
+Execute Program: 30 ms
+Wait for Page: 300 ms
+
+Execute Program: 30 ms
+Wait for Page: 300 ms
+
+Execute Program: 30 ms
+
+Calculation:
+Execution Time:
+30 + 30 + 30 + 30
+= 120 ms
+
+Page Waiting Time:
+300 + 300 + 300
+= 900 ms
+
+Total Time:
+120 + 900
+= 1020 ms
+
+Notice:
+The CPU spends much more time waiting for pages than actually executing instructions.
+
+Execution: 120 ms
+Waiting: 900 ms
+This demonstrates why page faults are expensive.
+
+------------------------------------------------------------
+WHY WORKING SETS IMPROVE PERFORMANCE
+
+If the entire Working Set is loaded before execution:
+Page Faults decrease.
+Waiting Time decreases.
+CPU Utilization increases.
+Overall execution becomes faster.
+
+------------------------------------------------------------
+ADVANTAGES OF DEMAND PAGING
+
+• Supports Virtual Memory
+• Less memory required
+• Better memory utilization
+• Only needed pages are loaded
+• Programs are no longer restricted by physical memory size
+
+------------------------------------------------------------
+DISADVANTAGES OF DEMAND PAGING
+
+• More page faults
+• Increased overhead
+• Requires PMTs and tracking bits
+• Thrashing may occur
+• CPU can spend significant time waiting for pages
+
+------------------------------------------------------------

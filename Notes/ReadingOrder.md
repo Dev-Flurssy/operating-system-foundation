@@ -9,3 +9,5 @@
 - Relocatable Dynamic Partitions
 - Paged Memory Allocation
 - Demand Paging
+- Page Replacement Policy
+- Paging Mechanics
