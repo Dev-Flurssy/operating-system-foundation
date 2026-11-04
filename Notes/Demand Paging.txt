@@ -1,0 +1,371 @@
+DEMAND PAGING
+
+Demand Paging introduced the concept of loading only part of a program into memory.
+Unlike ordinary Paging, Demand Paging does not load the entire program into memory before execution.
+
+Demand Paging is a memory management technique where pages are loaded into memory only when they are needed.
+Pages remain in secondary storage (disk) until they are requested.
+
+When needed:
+Disk → Memory
+
+Advantages:
+• Less memory required
+• Better memory utilization
+• More programs can run simultaneously
+• Makes Virtual Memory possible
+
+Disadvantages:
+• Page faults can occur
+• Page swapping creates overhead
+• Thrashing can reduce performance
+
+------------------------------------------------------------
+WHY DEMAND PAGING WAS INTRODUCED
+
+In ordinary Paging:
+• Every page must be loaded before execution begins
+• Large programs require large amounts of memory
+• Memory may contain pages that are never used
+
+Demand Paging solves this problem.
+Only required pages are loaded.
+
+Result: Less memory is occupied.
+
+------------------------------------------------------------
+HOW DEMAND PAGING WORKS
+
+Step 1: Program pages remain on disk.
+Step 2: Execution begins.
+Step 3: When a page is needed, the operating system checks whether it is already in memory.
+Step 4: If the page is in memory:
+Continue execution.
+Step 5: If the page is not in memory:
+Bring the page from disk into memory.
+Step 6: Resume execution.
+
+Key Point: Pages are loaded on demand.
+
+------------------------------------------------------------
+WHY DEMAND PAGING WORKS WELL
+
+Programs are usually not fully active at one time.
+Many pages are rarely used.
+
+Examples:
+Error Handling Modules
+Error messages and recovery code are executed only when errors occur.
+
+If no error occurs:
+Those pages never need to enter memory.
+
+Input, Processing and Output Modules
+Input Module Active → Processing Module Waiting
+Processing Module Active → Output Module Waiting
+Only active modules need memory.
+
+Menu Driven Programs
+Suppose a menu contains:
+1. Add Record
+2. Delete Record
+3. Print Report
+4. Help
+
+If the user selects:
+Add Record
+Only the Add Record module must be loaded.
+The other modules remain on disk.
+Large Tables
+
+A symbol table may support:
+100 symbols
+But only:
+10 symbols are used.
+
+The remaining pages never need to be loaded.
+
+------------------------------------------------------------
+VIRTUAL MEMORY
+
+Demand Paging made Virtual Memory possible.
+Virtual Memory creates the illusion that more memory exists than is physically available.
+
+Example:
+Physical RAM = 4 GB
+Program Requires = 8 GB
+
+Using Demand Paging:
+Only active pages are loaded.
+The user feels like the entire 8 GB program is running in memory.
+
+Key Point: Demand Paging creates the appearance of almost unlimited memory.
+
+------------------------------------------------------------
+FIGURE 3.5 EXPLANATION
+
+This figure shows four jobs sharing memory.
+
+Jobs:
+Job 1 = 4 Pages
+Job 2 = 2 Pages
+Job 3 = 3 Pages
+Job 4 = 6 Pages
+
+Not all pages are loaded.
+Job 4 PMT shows:
+Page 0 → In Memory
+Page 1 → In Memory
+Page 2 → In Memory
+Page 3 → Not In Memory
+Page 4 → Not In Memory
+Page 5 → Not In Memory
+
+Notice:
+Y = Yes (Page is in Memory)
+N = No (Page is on Disk)
+
+Example:
+Job 4 Page 3
+Status = N
+Meaning:
+The page exists on disk but has not yet been loaded into memory.
+This is the essence of Demand Paging.
+
+------------------------------------------------------------
+EXTRA FIELDS ADDED TO THE PMT
+
+Ordinary Paging PMT stores:
+• Page Number
+• Page Frame Number
+
+Demand Paging PMT stores three extra fields:
+1. In Memory Bit
+Purpose: Determines whether the page is already loaded.
+Values:
+Y = Page in Memory
+N = Page on Disk
+
+2. Modified Bit
+Purpose: Tracks whether page contents changed.
+If modified: The page must be saved before removal.
+If not modified: No need to rewrite the page to disk.
+This saves time.
+
+3. Referenced Bit
+Purpose: Tracks recent page activity.
+Helps determine: Which page should remain in memory.
+Which page should be removed.
+
+------------------------------------------------------------
+WHY THESE BITS ARE IMPORTANT
+
+In Memory Bit
+Tells the system: "Is the page already here?"
+
+Modified Bit
+Tells the system: "Must I save this page before removing it?"
+
+Referenced Bit
+Tells the system: "Has this page been used recently?"
+
+These fields improve page replacement decisions.
+
+------------------------------------------------------------
+PAGE SWAPPING
+ 
+is the movement of pages between memory and secondary storage.
+
+Example:
+Memory is full.
+
+A new page is requested.
+Step 1: Remove an old page.
+Step 2: Copy that page back to disk (if modified).
+Step 3: Load the requested page.
+Step 4: Update memory tables.
+
+This entire process is called a Swap.
+
+------------------------------------------------------------
+PAGE FAULT
+
+A Page Fault occurs when a program requests a page that is not currently in memory.
+
+Example:
+Job 4 requests Page 3.
+
+PMT says:
+Page 3 = N
+Meaning: Page 3 is not in memory.
+
+Result:
+Page Fault occurs.
+The operating system must load Page 3 from disk.
+
+------------------------------------------------------------
+HARDWARE INSTRUCTION PROCESSING ALGORITHM
+
+This algorithm runs first.
+
+Step 1: Start processing instruction.
+Step 2: Generate data address.
+Step 3: Compute page number.
+Step 4: Check whether page is in memory.
+
+If YES:
+• Retrieve data
+• Finish instruction
+• Continue with next instruction
+
+If NO:
+• Generate Page Fault
+• Call Page Fault Handler
+
+------------------------------------------------------------
+PAGE FAULT HANDLER
+
+The Page Fault Handler is a section of the operating system that resolves page faults.
+Its job is to load the requested page into memory.
+
+------------------------------------------------------------
+PAGE FAULT HANDLER ALGORITHM
+
+Step 1: 
+Check whether a free page frame exists.
+If YES: Load requested page immediately.
+If NO: Select a page to remove.
+
+Step 2: 
+If removed page was modified:
+Write it back to disk.
+
+Step 3
+Locate requested page on disk.
+
+Step 4
+Read page into memory.
+
+Step 5
+Update PMT.
+
+Step 6
+Update MMT.
+
+Step 7
+Restart interrupted instruction.
+
+------------------------------------------------------------
+WHAT HAPPENS WHEN MEMORY IS FULL?
+
+Suppose:
+Job 4 requests Page 3.
+All page frames are full.
+
+The Page Fault Handler must:
+1. Choose a page to remove.
+2. Save it if modified.
+3. Load Job 4 Page 3.
+4. Update all memory tables.
+5. Continue execution.
+
+This decision is called:
+Page Replacement.
+
+------------------------------------------------------------
+TABLES UPDATED AFTER A SWAP
+
+After a page swap:
+Three tables must be updated.
+
+1. PMT of the job losing a page
+2. PMT of the job gaining a page
+3. MMT
+
+Without updating the tables, the operating system would lose track of page locations.
+
+------------------------------------------------------------
+THRASHING
+
+Thrashing occurs when the system spends more time swapping pages than performing actual work.
+
+Symptoms:
+• Excessive page faults
+• Constant swapping
+• Very slow execution
+
+Result:
+CPU wastes time moving pages.
+Very little useful work is completed.
+
+------------------------------------------------------------
+FIGURE 3.6 EXPLANATION
+
+This figure demonstrates Thrashing.
+
+Program contains a loop:
+for(j = 1; j < 100; ++j)
+
+The loop is split across two pages.
+Page 0 contains: Beginning of loop.
+Page 1 contains: Remainder of loop.
+
+Assume: Only one page frame is available.
+
+Execution starts:
+Page 0 enters memory.
+Loop begins.
+
+Then:
+Program reaches code on Page 1.
+Page 1 must be loaded.
+Page 0 is removed.
+Loop repeats.
+
+Now execution returns to Page 0.
+Page 1 must be removed.
+Page 0 must be loaded again.
+This cycle repeats continuously.
+
+Result: Every loop iteration creates another page fault.
+
+Since the loop runs 100 times:
+Approximately 100 page faults occur.
+This is called Thrashing.
+
+------------------------------------------------------------
+WHY THRASHING IS BAD
+
+Without Thrashing: CPU performs useful computation.
+
+With Thrashing: CPU spends most of its time:
+• Swapping pages
+• Reading disk
+• Writing disk
+
+Performance drops dramatically.
+
+------------------------------------------------------------
+HOW TO REDUCE THRASHING
+
+• Increase available memory
+• Reduce number of competing jobs
+• Improve page replacement policies
+• Keep frequently used pages in memory
+• Design programs to reduce cross-page loops
+
+------------------------------------------------------------
+DEMAND PAGING VS PAGING
+
+Paging
+• Entire program loaded
+• More memory required
+• No page faults during startup
+
+Demand Paging
+• Only needed pages loaded
+• Less memory required
+• Uses page faults and swapping
+• Makes Virtual Memory possible
+
+------------------------------------------------------------
