@@ -9,7 +9,6 @@ Programs → Memory Manager → RAM
 ------------------------------------------------------------
 WHY IS MEMORY MANAGEMENT IMPORTANT?
 
-
 When a program needs memory:
 Step 1: The Memory Manager receives the memory request
 Step 2: The Memory Manager checks available memory space
@@ -238,8 +237,7 @@ Purpose:
 • Stores memory addresses
 • Stores memory sizes
 
-Importance:
-The Memory List helps the operating system know where programs can be loaded.
+Importance: The Memory List helps the operating system know where programs can be loaded.
 
 ------------------------------------------------------------
 DEALLOCATION OF MEMORY
@@ -250,15 +248,12 @@ Step 1: The operating system removes the program from memory
 Step 2: The memory becomes available
 Step 3: The Memory List is updated
 
-Importance:
-Without deallocation, memory would eventually become full and no other programs could run.
+Importance: Without deallocation, memory would eventually become full and no other programs could run.
 
 ------------------------------------------------------------
 BOUNDS REGISTER
 
 A Bounds Register is used for memory protection.
-
-Purpose:
 It defines the memory limit a program can access.
 
 Benefits:
@@ -267,8 +262,7 @@ Benefits:
 • Protects the operating system
 • Improves system security
 
-Key Point:
-Programs cannot access memory outside their assigned boundaries.
+Key Point: Programs cannot access memory outside their assigned boundaries.
 
 ------------------------------------------------------------
 COMPACTION
@@ -288,4 +282,143 @@ Disadvantages:
 • Requires CPU time
 • Causes system overhead
 
+------------------------------------------------------------
+DYNAMIC PARTITIONS 
+
+Dynamic Partitions allocate only the memory a job actually needs.
+Unlike Fixed Partitions, memory is not divided into fixed sections beforehand.
+Jobs are loaded into memory as they arrive and receive exactly the amount of memory they request.
+This reduces Internal Fragmentation but creates a new problem called External Fragmentation.
+
+----------------------------
+Initial Memory Allocation
+
+Job List:
+J1 = 10K
+J2 = 15K
+J3 = 20K
+J4 = 50K
+
+Memory Allocation:
+Operating System
+Job 1 = 10K
+Job 2 = 15K
+Job 3 = 20K
+Job 4 = 50K
+
+Total Memory Used:
+10K + 15K + 20K + 50K = 95K
+
+All jobs are allocated exactly the memory they need.
+No memory is wasted inside partitions.
+
+----------------------------
+Job 1 and Job 4 Finish
+
+Job 1 ends.
+Job 4 ends.
+
+Their memory becomes free.
+
+Memory Layout:
+Free Space = 10K
+Job 2 = 15K
+Job 3 = 20K
+Free Space = 50K
+
+Notice:
+There are now two separate free areas.
+Memory is no longer one continuous block.
+
+----------------------------
+Job 5 and Job 6 Arrive
+
+Job 5 = 5K
+Job 6 = 30K
+
+Using First-Come First-Served:
+Job 5 takes the first available free block.
+Job 5 enters the 10K free area.
+
+Remaining Free Space = 5K
+Job 6 enters the 50K free area.
+Remaining Free Space = 20K
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Job 3 = 20K
+Job 6 = 30K
+Free = 20K
+
+----------------------------
+Job 3 Finishes
+
+Job 3 completes execution.
+Its 20K memory space becomes free.
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Free = 20K
+Job 6 = 30K
+Free = 20K
+
+Now there are three separate free spaces:
+Free Space 1 = 5K
+Free Space 2 = 20K
+Free Space 3 = 20K
+
+Total Free Memory:
+5K + 20K + 20K = 45K
+
+----------------------------
+Job 7 Arrives
+
+Job 7 = 10K
+The first free block large enough is the 20K block.
+Therefore Job 7 is loaded there.
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Job 7 = 10K
+Free = 10K
+Job 6 = 30K
+Free = 20K
+
+Why Does Job 8 Wait?
+Job 8 requires 30K.
+
+Available Free Memory:
+5K + 10K + 20K = 35K
+Although 35K is available, there is no single contiguous block of 30K.
+
+Available blocks:
+• 5K
+• 10K
+• 20K
+
+None is large enough individually.
+Therefore Job 8 cannot be loaded and must wait.
+
+----------------------------
+External Fragmentation
+
+Definition:
+External Fragmentation occurs when enough total memory exists but it is scattered into several small blocks.
+
+Example:
+Free Memory = 35K
+Required Memory = 30K
+
+Job 8 still cannot be loaded because the memory is split into:
+• 5K
+• 10K
+• 20K
+
+Key Point: External Fragmentation = Free memory exists but is scattered.
 ------------------------------------------------------------
