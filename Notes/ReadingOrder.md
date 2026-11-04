@@ -11,3 +11,5 @@
 - Demand Paging
 - Page Replacement Policy
 - Paging Mechanics
+- Segmented Memory Allocation
+- Virtual Memory

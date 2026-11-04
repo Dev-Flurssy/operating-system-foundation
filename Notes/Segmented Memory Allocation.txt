@@ -1,12 +1,9 @@
-------------------------------------------------------------
 SEGMENTED MEMORY ALLOCATION
 
 Segmentation was developed to organize memory according to a program's logical structure.
-
 Programmers often divide programs into modules that perform specific tasks.
 
 Examples:
-
 • Main Program
 • Subroutines
 • Functions
@@ -14,13 +11,9 @@ Examples:
 • Error Handling Modules
 
 Instead of dividing a program into equal-sized pages, segmentation divides a program into logical units called segments.
-
-Definition:
-
 Segmented Memory Allocation divides a job into variable-sized segments based on program functionality.
 
 Key Idea:
-
 Program Structure → Segments
 
 Advantages:
@@ -38,14 +31,12 @@ Disadvantages:
 PAGING VS SEGMENTATION
 
 Paging
-
 • Fixed-size pages
 • Physical division
 • Invisible to programmers
 • Pages often contain parts of multiple modules
 
 Segmentation
-
 • Variable-size segments
 • Logical division
 • Visible to programmers
@@ -54,73 +45,52 @@ Segmentation
 Example:
 
 Paging:
-
 Page 1 might contain:
 • End of Main Program
 • Beginning of Subroutine A
 
 Segmentation:
-
 Segment 0 = Main Program
-
 Segment 1 = Subroutine A
-
 Segment 2 = Subroutine B
-
 Each module remains intact.
 
 ------------------------------------------------------------
 FIGURE 3.13 EXPLANATION
 
 Job 1 contains three logical modules:
-
 Segment 0
 
 Main Program
-
 Size = 350 Bytes
 
 Segment 1
-
 Subroutine A
-
 Size = 200 Bytes
 
 Segment 2
-
 Subroutine B
-
 Size = 100 Bytes
 
 Notice:
-
 This is one job.
-
 However, it has been divided into three segments.
-
 Each segment contains code performing a related function.
 
 This is the primary idea behind segmentation:
-
 Logical program modules become memory segments.
 
 ------------------------------------------------------------
 SEGMENT MAP TABLE (SMT)
 
-Purpose:
-
 Tracks every segment belonging to a job.
-
 The SMT performs the same role as the PMT in Paging.
 
 However:
-
 PMT tracks pages.
-
 SMT tracks segments.
 
 Information Stored:
-
 • Segment Number
 • Segment Size
 • Status
@@ -133,318 +103,209 @@ Information Stored:
 FIGURE 3.14 EXPLANATION
 
 Segment Map Table for Job 1
-
 Segment 0
-
 Size = 350
-
 Status = Y
-
 Access = E
-
 Memory Address = 4000
 
 Meaning:
-
 Main Program is loaded into memory beginning at address 4000.
 
 Segment 1
-
 Size = 200
-
 Status = Y
-
 Access = E
-
 Memory Address = 7000
 
 Meaning:
-
 Subroutine A begins at address 7000.
 
 Segment 2
-
 Size = 100
-
 Status = N
-
 Access = E
-
 Memory Address = Empty
 
 Meaning:
-
 Subroutine B is not currently in memory.
 
 Definitions:
-
 Y = In Memory
-
 N = Not In Memory
-
 E = Execute Permission
 
 Important Observation:
-
 Only the Main Program and Subroutine A are currently loaded.
-
 Subroutine B remains on secondary storage until needed.
-
 This is similar to Demand Paging.
 
 ------------------------------------------------------------
 THREE TABLES USED IN SEGMENTATION
 
 The operating system tracks segments using:
-
 1. Job Table (JT)
-
 2. Segment Map Table (SMT)
-
 3. Memory Map Table (MMT)
 
-Job Table
-
-Tracks active jobs.
-
-Segment Map Table
-
-Tracks segments belonging to each job.
-
-Memory Map Table
-
-Tracks memory allocation.
+Job Table: Tracks active jobs.
+Segment Map Table: Tracks segments belonging to each job.
+Memory Map Table: Tracks memory allocation.
 
 ------------------------------------------------------------
 HOW MEMORY LOOKS IN SEGMENTATION
 
-Unlike Paging:
-
-Memory is NOT divided into Page Frames.
-
-Reason:
-
-Segments have different sizes.
+Unlike Paging: Memory is NOT divided into Page Frames.
+Reason: Segments have different sizes.
 
 Example:
-
 Main Program = 350 Bytes
-
 Subroutine A = 200 Bytes
-
 Subroutine B = 100 Bytes
-
 Because sizes differ, memory allocation becomes dynamic.
 
-Result:
-
-External Fragmentation returns.
+Result: External Fragmentation returns.
 
 ------------------------------------------------------------
 FIGURE 3.15 EXPLANATION
 
-Assume:
+Assume: Main Program calls Subroutine A.
 
-Main Program calls Subroutine A.
-
-The CPU requests:
-
-Segment 1
-
+The CPU requests: Segment 1
 The operating system checks the SMT.
 
-From the SMT:
-
-Segment 1
-
+From the SMT: Segment 1
 Memory Address = 7000
 
-Therefore:
-
-Subroutine A begins at address 7000.
-
+Therefore: Subroutine A begins at address 7000.
 Execution jumps directly to that location.
 
 Notice:
-
 The Main Program and Subroutine A are stored in different locations.
-
 They do not need to be adjacent.
-
 This is called Non-Contiguous Segment Storage.
 
 ------------------------------------------------------------
 SEGMENT ADDRESSING
 
 To locate an instruction inside a segment, the operating system needs:
-
 1. Segment Number
-
 2. Displacement
 
 Address Format:
-
 SEGMENT NUMBER + DISPLACEMENT
-
 This is a Two-Dimensional Addressing Scheme.
 
 ------------------------------------------------------------
 DISPLACEMENT IN SEGMENTATION
 
-Displacement means:
-
-Position inside the segment.
+Displacement means: Position inside the segment.
 
 Example:
-
 Segment 1 begins at:
-
 7000
 
 Suppose instruction needed is:
-
 100 bytes from the beginning of Segment 1.
 
 Calculation:
-
 Actual Memory Location
-
 = Beginning Address + Displacement
-
 = 7000 + 100
-
 = 7100
 
-Answer:
-
-The instruction is located at memory address 7100.
+Answer: The instruction is located at memory address 7100.
 
 ------------------------------------------------------------
 SEGMENT BOUNDARY CHECKING
 
 Can displacement be larger than the segment size?
-
 No.
 
 Example:
-
 Segment Size = 200
-
 Valid Range:
-
 0 - 199
-
 Invalid Displacement:
-
 250
 
 This would point outside the segment.
-
 To prevent errors, the operating system checks:
 
 Displacement < Segment Size
-
 This is called Bounds Checking.
 
 ------------------------------------------------------------
 EXTERNAL FRAGMENTATION IN SEGMENTATION
 
 Because segments have different sizes:
-
 Memory contains holes of different sizes.
 
 Example:
-
 200 Bytes Free
-
 175 Bytes Free
-
 500 Bytes Free
-
 These holes may be scattered.
 
 Result:
-
 External Fragmentation.
 
 To solve this:
-
 Some systems perform:
 
 Compaction
-
 which combines free spaces.
 
 ------------------------------------------------------------
 SEGMENTED / DEMAND PAGED MEMORY ALLOCATION
 
 This scheme combines:
-
 • Segmentation
 • Demand Paging
 
 It takes the advantages of both systems.
-
-Goal:
-
-Keep logical program structure while eliminating major segmentation problems.
+Goal: Keep logical program structure while eliminating major segmentation problems.
 
 ------------------------------------------------------------
 WHY IT WAS CREATED
 
 Problem with Segmentation:
-
 • External Fragmentation
 • Compaction Required
 • Difficult Memory Allocation
 
 Problem with Paging:
-
 • Logical modules may be split awkwardly
 
 Solution:
-
 Segment the program first.
-
 Then page each segment.
 
 ------------------------------------------------------------
 HOW IT WORKS
 
 Step 1
-
 Divide program into Segments.
 
 Example:
-
 Segment 0 = Main Program
-
 Segment 1 = Subroutine A
-
 Segment 2 = Subroutine B
 
 Step 2
-
 Divide each segment into Pages.
 
 Example:
-
 Segment 0
-
 Page 0
-
 Page 1
-
 Page 2
 
 Segment 1
-
 Page 0
-
 Page 1
 
 Step 3
-
 Load pages into available page frames using Demand Paging.
 
 ------------------------------------------------------------
@@ -453,210 +314,119 @@ FIGURE 3.16 EXPLANATION
 Figure 3.16 shows all four tables working together.
 
 Active Job Table
-
 Stores:
-
 Job Number
-
 Pointer to Segment Map Table
 
 Example:
-
 Job 0
-
 Job 1
-
 Job 2
 
 Segment Map Tables
-
 Store:
-
 Segment Number
-
 Pointer to that segment's Page Map Table
 
 Example:
-
 Job 0
-
 Segment 0 → PMT
-
 Segment 1 → PMT
-
 Segment 2 → PMT
 
 Page Map Tables
-
 Store:
-
 Page Number
-
 Page Frame Number
 
 Example:
-
 Job 0 Segment 0
-
 Page 0 → Frame 7
-
 Page 1 → Frame 4
 
 Main Memory
-
 Contains page frames.
 
 Examples:
-
 Job 0 Segment 1 Page 0
-
 Job 0 Segment 0 Page 1
-
 Job 0 Segment 2 Page 0
 
 Notice:
-
 Pages from different segments are mixed throughout memory.
-
 This is acceptable because PMTs track locations.
 
 ------------------------------------------------------------
 FOUR TABLES USED
 
 Segmented/Demand Paging requires:
-
-1. Job Table (JT)
-
-Tracks jobs.
-
-2. Segment Map Table (SMT)
-
-Tracks segments.
-
-3. Page Map Table (PMT)
-
-Tracks pages within segments.
-
-4. Memory Map Table (MMT)
-
-Tracks physical memory.
+1. Job Table (JT): Tracks jobs.
+2. Segment Map Table (SMT): Tracks segments.
+3. Page Map Table (PMT): Tracks pages within segments.
+4. Memory Map Table (MMT): Tracks physical memory.
 
 This is more overhead than all previous systems.
 
 ------------------------------------------------------------
 THREE-DIMENSIONAL ADDRESSING
 
-Paging uses:
+Paging uses: Page Number + Displacement
+Segmentation uses: Segment Number + Displacement
 
-Page Number + Displacement
-
-Segmentation uses:
-
-Segment Number + Displacement
-
-Segmented/Paging uses:
-
-Segment Number + Page Number + Displacement
-
-Formula:
-
-SEGMENT NUMBER
-
-+
-
-PAGE NUMBER
-
-+
-
-DISPLACEMENT
+Segmented/Paging uses: Segment Number + Page Number + Displacement
+Formula: SEGMENT NUMBER + PAGE NUMBER + DISPLACEMENT
 
 Example:
-
 Segment 2
-
 Page 1
-
 Offset 50
 
 The operating system must locate:
-
 Segment 2 → Page 1 → Byte 50
 
 ------------------------------------------------------------
 ASSOCIATIVE MEMORY
 
-Problem:
-
 Too many table lookups are required.
-
 To find a location the system may search:
-
 SMT
-
-then
-
-PMT
-
-then
-
-Memory
+then PMT
+then Memory
 
 This takes time.
 
 Solution:
-
 Associative Memory
-
-Definition:
-
 A special collection of hardware registers that stores recently used segment and page references.
-
-Purpose:
-
-Speed up address translation.
+Purpose: Speed up address translation.
 
 ------------------------------------------------------------
 HOW ASSOCIATIVE MEMORY WORKS
 
 Suppose:
-
 Page needed was recently accessed.
 
 Step 1
-
 Search Associative Memory.
-
 If found:
-
 Immediate address translation.
-
 No SMT search.
-
 No PMT search.
-
 Execution continues.
 
 Step 2
-
 If not found:
-
 Search SMT.
-
 Locate PMT.
-
 Search PMT.
-
 Locate Memory Address.
 
 Step 3
-
 Store this new reference inside Associative Memory.
-
 Future lookups will be faster.
 
 ------------------------------------------------------------
 ADVANTAGES OF ASSOCIATIVE MEMORY
-
 • Faster address translation
 • Fewer table accesses
 • Improved system performance
@@ -664,70 +434,8 @@ ADVANTAGES OF ASSOCIATIVE MEMORY
 
 ------------------------------------------------------------
 DISADVANTAGES OF ASSOCIATIVE MEMORY
-
 • Expensive hardware
 • Complex implementation
 • Additional overhead
 
 ------------------------------------------------------------
-EXAM SUMMARY
-
-Segmentation
-
-• Divides programs into logical modules
-• Uses variable-sized segments
-
-SMT
-
-• Tracks segments
-
-Segment Address
-
-= Segment Number + Displacement
-
-Segmentation Problem
-
-• External Fragmentation
-
-Segmented/Demand Paging
-
-• Combines Segmentation and Paging
-• Segments divided into Pages
-
-Tables Required
-
-• JT
-• SMT
-• PMT
-• MMT
-
-Address Format
-
-Segment Number
-
-+
-
-Page Number
-
-+
-
-Displacement
-
-Associative Memory
-
-• Stores recently used address translations
-• Speeds up memory access
-
-Quick Shortcut:
-
-Paging → Physical Division
-
-Segmentation → Logical Division
-
-Segmented/Paging → Best of Both
-
-SMT → Segments
-
-PMT → Pages
-
-Associative Memory → Faster Lookup
