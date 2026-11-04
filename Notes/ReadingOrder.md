@@ -7,4 +7,5 @@
 - Best-Fit Versus First-Fit Allocation
 - Deallocation
 - Relocatable Dynamic Partitions
-- 
+- Paged Memory Allocation
+- Demand Paging

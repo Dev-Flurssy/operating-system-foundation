@@ -1,0 +1,713 @@
+PAGE REPLACEMENT POLICIES AND CONCEPTS
+
+When a page fault occurs and memory is full, the operating system must decide:
+
+Which page should be removed?
+The rule used to make this decision is called a Page Replacement Policy.
+A Page Replacement Policy determines which page will be removed from memory to make room for a newly requested page.
+
+Importance: The page replacement policy greatly affects system performance.
+
+A poor policy can cause:
+• More page faults
+• More swapping
+• More thrashing
+• Slower execution
+
+Two of the most common policies are:
+1. First-In First-Out (FIFO)
+2. Least Recently Used (LRU)
+
+------------------------------------------------------------
+EVERYDAY EXAMPLE - SWEATER DRAWER
+
+Imagine your sweater drawer is full.
+You buy a new sweater.
+To store it, one sweater must be removed.
+
+There are two choices:
+FIFO Method: Remove the oldest sweater.
+Reason: It has been in the drawer the longest.
+LRU Method: Remove the sweater that has not been worn recently.
+Reason: It is least likely to be needed immediately.
+
+Problem:
+Neither method guarantees that the removed sweater won't be needed tomorrow.
+The same problem occurs in memory management.
+A page removed today may be needed again very soon.
+This can lead to Thrashing.
+
+------------------------------------------------------------
+FIRST-IN FIRST-OUT (FIFO)
+
+FIFO removes the page that entered memory first.
+The oldest page is always removed first.
+
+Rule: First Page In → First Page Out
+FIFO assumes: A page that has been in memory for a long time is less likely to be needed again.
+
+Advantages:
+• Easy to implement
+• Requires little overhead
+• Simple queue structure
+
+Disadvantages:
+• May remove heavily used pages
+• Can cause many page faults
+• Can cause FIFO Anomaly
+
+------------------------------------------------------------
+FIGURE 3.7 EXPLANATION
+
+Memory contains only:
+Page Frame 1
+Page Frame 2
+
+Pages Requested:
+A → B → C → A → B → D → B → A → C → D
+
+Initially:
+Frame 1 = A
+Frame 2 = B
+
+When Page C is requested:
+Both frames are full.
+
+FIFO removes:
+Page A
+because A entered memory before B.
+Page C replaces A.
+
+Later:
+Page A is requested again.
+
+FIFO now removes:
+Page B
+because B is now the oldest page.
+This process continues throughout execution.
+
+Key Idea: FIFO only considers age.
+It does NOT consider how frequently a page is used.
+
+------------------------------------------------------------
+FIGURE 3.8 EXPLANATION
+
+There are only: 2 Page Frames
+Pages are requested in this order:
+A, B, A, C, A, B, D, B, A, C, D
+
+Time 1
+Request A
+
+Memory:
+Frame 1 = A
+Frame 2 = Empty
+Page Fault = Yes
+Interrupts = 1
+
+Time 2
+Request B
+
+Memory:
+Frame 1 = A
+Frame 2 = B
+Page Fault = Yes
+Interrupts = 2
+
+Time 3
+Request A
+A already exists.
+No Page Fault.
+Interrupts = 2
+
+Time 4
+Request C
+Memory Full.
+FIFO removes A.
+
+Memory:
+Frame 1 = C
+Frame 2 = B
+Page Fault = Yes
+Interrupts = 3
+
+Time 5
+Request A
+Memory Full.
+FIFO removes B.
+
+Memory:
+Frame 1 = C
+Frame 2 = A
+Page Fault = Yes
+Interrupts = 4
+
+Time 6
+Request B
+Remove C.
+Load B.
+Page Fault = Yes
+Interrupts = 5
+
+Time 7
+Request D
+Remove A.
+Load D.
+Page Fault = Yes
+Interrupts = 6
+
+Time 8
+Request B
+Already present.
+No Fault.
+Interrupts = 6
+
+Time 9
+Request A
+Remove B.
+Load A.
+Page Fault = Yes
+Interrupts = 7
+
+Time 10
+Request C
+Remove D.
+Load C.
+Page Fault = Yes
+Interrupts = 8
+
+Time 11
+Request D
+Remove A.
+Load D.
+Page Fault = Yes
+Interrupts = 9
+
+Final Result: Page Requests = 11
+
+Page Faults = 9
+Failure Rate:
+9 ÷ 11
+= 81.8%
+≈ 82%
+
+Success Rate:
+2 ÷ 11
+= 18.2%
+≈ 18%
+
+Important Observation: FIFO removed Page A several times even though A was one of the most frequently used pages.
+
+------------------------------------------------------------
+LEAST RECENTLY USED (LRU)
+
+LRU removes the page that has not been used for the longest time.
+
+Rule: Least Recently Used Page → Removed First
+LRU assumes:
+A page used recently is likely to be used again soon.
+This idea comes from the Theory of Locality.
+
+Advantages:
+• Better than FIFO in many situations
+• Keeps frequently used pages longer
+• Reduces unnecessary page faults
+
+Disadvantages:
+• More complex
+• Requires usage tracking
+• More overhead
+
+------------------------------------------------------------
+FIGURE 3.9 EXPLANATION
+
+Same Example:
+
+Pages Requested:
+A, B, A, C, A, B, D, B, A, C, D
+
+Frames Available:
+2
+Time 1
+Request A
+Fault = Yes
+
+Time 2
+Request B
+Fault = Yes
+
+Time 3
+Request A
+Already in memory.
+No fault.
+
+Time 4
+Request C
+LRU checks usage.
+B was used less recently than A.
+Remove B.
+Load C.
+Fault = Yes
+
+Time 5
+Request A
+A already exists.
+No fault.
+
+Time 6
+Request B
+C becomes least recently used.
+Remove C.
+Load B.
+Fault = Yes
+
+Time 7
+Request D
+A was used recently.
+B was used recently.
+Remove least recently used.
+Load D.
+Fault = Yes
+Process continues similarly.
+
+Final Result:
+Page Requests = 11
+Page Faults = 8
+
+Failure Rate:
+8 ÷ 11
+= 72.7%
+≈ 73%
+
+Success Rate:
+3 ÷ 11
+= 27%
+
+Result:
+LRU performs slightly better than FIFO.
+
+Why?
+Because Page A stays in memory longer since it is used frequently.
+
+------------------------------------------------------------
+FIFO VS LRU
+
+FIFO
+• Oldest page removed
+• Simple
+• Fast
+• May remove frequently used pages
+
+LRU
+• Least recently used page removed
+• More intelligent
+• Better page retention
+• Requires more tracking
+
+Example:
+FIFO Faults = 9
+LRU Faults = 8
+
+Winner: LRU
+
+------------------------------------------------------------
+FIFO ANOMALY
+
+A strange situation where adding more memory causes MORE page faults.
+Normally we expect:
+
+More Memory → Fewer Faults
+FIFO can sometimes violate this rule.
+
+Example:
+Old System
+3 Frames
+Page Faults = 10
+New System
+
+4 Frames
+Page Faults = 12
+More memory actually created more faults.
+
+This unusual behavior is called:
+FIFO Anomaly
+
+Important: LRU does not suffer from FIFO Anomaly.
+
+------------------------------------------------------------
+STACK ALGORITHM
+
+A page replacement algorithm where adding more memory can never increase the number of page faults.
+
+Example:
+LRU
+Because LRU is a Stack Algorithm:
+More memory always produces the same number or fewer page faults.
+Never more.
+
+------------------------------------------------------------
+CLOCK PAGE REPLACEMENT
+
+A variation of LRU that uses a circular queue.
+It behaves like a clock.
+
+Instead of tracking exact usage time, it tracks:
+Reference Bits
+
+Reference Bit:
+1 = Recently Used
+0 = Not Recently Used
+
+------------------------------------------------------------
+HOW CLOCK REPLACEMENT WORKS
+
+Step 1: A pointer moves around a circular queue.
+
+Step 2: Check current page's Reference Bit.
+
+If Bit = 1
+• Give another chance
+• Change bit to 0
+• Move pointer forward
+
+If Bit = 0
+• Remove page
+• Replace with new page
+
+------------------------------------------------------------
+FIGURE 3.10 EXPLANATION
+
+Memory contains:
+Pages:
+68
+35
+45
+111
+19
+180
+210
+306
+
+Each page has a Reference Bit.
+
+Pointer reaches:
+Page 210
+Reference Bit = 0
+
+Meaning:
+Page 210 has not been used recently.
+
+Therefore:
+Page 210 is selected for removal.
+New Page: 146
+replaces: Page 210
+
+Result:
+Page 146 enters memory.
+Page 210 leaves memory.
+
+------------------------------------------------------------
+REFERENCE BYTE METHOD
+
+Another variation of LRU uses:
+8-Bit Reference Bytes
+Instead of one Reference Bit.
+
+Purpose: Store the history of page usage.
+
+------------------------------------------------------------
+HOW REFERENCE BYTES WORK
+
+When page enters memory:
+Reference Byte: 10000000
+
+At every clock tick:
+Bits shift right.
+
+Example:
+10000000 becomes 01000000
+then: 00100000
+then: 00010000
+and so on.
+
+Whenever page is referenced:
+Leftmost bit becomes 1 again.
+This keeps a usage history.
+
+------------------------------------------------------------
+FIGURE 3.11 EXPLANATION
+
+Six pages are currently in memory.
+
+At Time 0
+Every Page: 10000000
+
+Meaning:
+Every page was recently referenced.
+
+At every clock cycle:
+Bits shift right.
+
+Pages referenced during that cycle receive a new 1 at the leftmost position.
+
+Example:
+Page 1
+Time 0
+10000000
+
+Time 1
+11000000
+
+Time 2
+11100000
+
+Time 3
+11110000
+
+Time 4
+11111000
+
+This shows Page 1 was used repeatedly.
+
+Page 3
+Time 0
+10000000
+
+Time 1
+11000000
+
+Time 2
+01100000
+
+Time 3
+00110000
+
+Time 4
+00011000
+
+This shows Page 3 has not been used recently.
+
+------------------------------------------------------------
+HOW LRU CHOOSES A PAGE
+
+When a Page Fault occurs:
+The operating system compares all Reference Bytes.
+
+The smallest value is selected.
+Reason: Smaller value means the page has been inactive longer.
+
+Example:
+Page A
+11111000
+
+Page B
+00011000
+
+Page B is selected.
+Reason: Page B was used much less recently.
+
+------------------------------------------------------------
+ADVANTAGES OF LRU
+
+• Better memory utilization
+• Keeps active pages in memory
+• Fewer unnecessary page replacements
+• No FIFO Anomaly
+• Stack Algorithm
+
+------------------------------------------------------------
+DISADVANTAGES OF LRU
+
+• More overhead
+• Requires usage tracking
+• More complicated implementation
+• Additional memory required
+
+------------------------------------------------------------
+FIGURE 3.10 EXPLANATION - CLOCK PAGE REPLACEMENT
+
+Figure 3.10 illustrates the Clock Page Replacement Algorithm.
+
+The pages currently in memory are:
+Page 180
+Page 19
+Page 111
+Page 45
+Page 68
+Page 35
+Page 210
+Page 306
+
+Each page has a Reference Bit.
+Meaning of the bits:
+1 = Recently Referenced
+0 = Not Recently Referenced
+
+Current Reference Bits:
+Page 180 → 0
+Page 19 → 0
+Page 111 → 1
+Page 45 → 1
+Page 68 → 1
+
+Page 35 → 1
+Page 210 → 0
+Page 306 → 1
+
+A pointer continuously moves around the circular queue like the hand of a clock.
+The pointer checks each page's Reference Bit.
+
+Rule:
+Reference Bit = 1
+• Give page a second chance
+• Change bit from 1 to 0
+• Move pointer to the next page
+
+Reference Bit = 0
+• Remove page
+• Use its page frame for the new page
+
+In Figure 3.10:
+
+The pointer reaches:
+Page 210
+Reference Bit = 0
+
+Therefore:
+Page 210 is selected for removal.
+
+New Page: Page 146
+replaces: Page 210
+
+Result: Page 210 leaves memory.
+Page 146 enters memory.
+
+Why is this called Clock Replacement?
+Because the pointer continuously moves around the circular structure in a clockwise manner like the hand of a clock.
+
+Advantages:
+• Simple implementation
+• Better than FIFO
+• Gives frequently used pages a second chance
+• Approximates LRU performance
+
+Key Point:
+Clock Replacement is often called the Second-Chance Algorithm because recently used pages get another opportunity to stay in memory.
+
+------------------------------------------------------------
+FIGURE 3.11 EXPLANATION - REFERENCE BYTE LRU
+
+Figure 3.11 shows another implementation of LRU using an 8-bit Reference Byte.
+Purpose: Track the recent usage history of each page.
+Initially: All pages have been referenced once.
+
+Therefore:
+Page 1 = 10000000
+Page 2 = 10000000
+Page 3 = 10000000
+Page 4 = 10000000
+Page 5 = 10000000
+Page 6 = 10000000
+
+The leftmost bit represents the most recent activity.
+
+How it works: At every clock tick:
+Step 1: Shift all bits one position to the right.
+
+Example:
+10000000 becomes 01000000
+
+Step 2; If the page was referenced during that time interval:
+Set the leftmost bit to 1.
+
+Otherwise:
+Leave it as 0.
+
+This creates a history of page usage.
+Time Snapshot 0
+
+All Pages: 10000000
+
+Meaning: All pages were recently referenced.
+
+Time Snapshot 1
+Referenced Pages:
+1, 3, 5, 6
+
+Result:
+Page 1 = 11000000
+Page 2 = 01000000
+Page 3 = 11000000
+Page 4 = 01000000
+Page 5 = 11000000
+Page 6 = 11000000
+
+Notice:
+Pages 2 and 4 were not referenced.
+Therefore their leftmost bit became 0.
+
+Time Snapshot 2
+Referenced Pages:
+1, 2, 4
+
+Result: 
+Page 1 = 11100000
+Page 2 = 10100000
+Page 3 = 01100000
+Page 4 = 10100000
+Page 5 = 01100000
+Page 6 = 01100000
+
+Time Snapshot 3
+Referenced Pages:
+1, 2, 4, 6
+
+Result:
+Page 1 = 11110000
+Page 2 = 11010000
+Page 3 = 00110000
+Page 4 = 11010000
+Page 5 = 00110000
+Page 6 = 10110000
+Time Snapshot 4
+
+Referenced Pages:
+1 and 4
+
+Final Values:
+Page 1 = 11111000
+Page 2 = 01101000
+Page 3 = 00011000
+Page 4 = 11101000
+Page 5 = 00011000
+Page 6 = 01011000
+
+Analysis:
+Most Active Page:
+
+Page 1
+Reference Byte:
+11111000
+
+Reason:
+Page 1 was referenced repeatedly.
+
+Least Active Pages:
+Page 3 and Page 5
+
+Reference Byte:
+00011000
+
+Reason:
+They have not been referenced recently.
+When a page fault occurs:
+LRU chooses the page with the smallest binary value.
+
+Therefore:
+Page 3 or Page 5 would likely be selected for removal.
+
+Key Point:
+Large binary value = Frequently Used Recently
+Small binary value = Not Used Recently
+
+------------------------------------------------------------
