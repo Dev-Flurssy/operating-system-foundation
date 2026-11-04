@@ -1,0 +1,977 @@
+------------------------------------------------------------
+VIRTUAL MEMORY
+
+Demand Paging made Virtual Memory possible.
+
+Before Virtual Memory:
+
+A program had to fit into available memory before execution.
+
+Large programs could not run if insufficient memory existed.
+
+Virtual Memory removed this restriction.
+
+Definition:
+
+Virtual Memory is a memory management technique that allows programs larger than physical memory to execute by loading only the needed portions into memory.
+
+Key Idea:
+
+Only part of a program is actually in RAM.
+
+The rest remains on disk.
+
+To the user:
+
+The entire program appears to be in memory.
+
+Advantages:
+• Programs can be larger than physical memory
+• Better memory utilization
+• Supports multiprogramming
+• Makes Demand Paging practical
+
+Disadvantages:
+• More overhead
+• More page faults
+• More complex operating system design
+
+------------------------------------------------------------
+WHAT IS THE MAIN IDEA OF VIRTUAL MEMORY?
+
+Suppose:
+
+Physical Memory = 4 GB
+
+Program Size = 10 GB
+
+Without Virtual Memory:
+
+Program cannot execute.
+
+With Virtual Memory:
+
+Only the active pages are loaded into RAM.
+
+The remaining pages stay on disk until needed.
+
+Result:
+
+The 10 GB program runs successfully.
+
+Therefore:
+
+Virtual Memory gives the illusion of a very large memory even though physical memory is limited.
+
+------------------------------------------------------------
+BEFORE VIRTUAL MEMORY
+
+In early systems:
+
+The programmer had to make sure programs fit into memory.
+
+If memory was too small:
+
+The program could not execute.
+
+Programmers often wrote:
+
+• Small programs
+• Compact code
+• Highly optimized instructions
+
+Problem:
+
+These programs were difficult to understand and maintain.
+
+Only the original programmer usually understood the code.
+
+------------------------------------------------------------
+OVERLAYS
+
+Before Virtual Memory, programmers used Overlays.
+
+Old Name:
+
+Roll-In / Roll-Out
+
+Modern Name:
+
+Overlay
+
+Definition:
+
+An Overlay is a section of a program loaded into memory only when needed.
+
+How It Worked:
+
+Step 1
+
+Load Overlay 1.
+
+Step 2
+
+Execute Overlay 1.
+
+Step 3
+
+Replace Overlay 1 with Overlay 2.
+
+Step 4
+
+Execute Overlay 2.
+
+Step 5
+
+Replace Overlay 2 with Overlay 3.
+
+Continue until the program finishes.
+
+Important:
+
+The programmer had to manually divide the program into overlays.
+
+This was tedious and error-prone.
+
+------------------------------------------------------------
+HOW OVERLAYS LED TO VIRTUAL MEMORY
+
+The idea behind overlays was:
+
+Only the currently needed code should be in memory.
+
+This inspired:
+
+• Paging
+• Segmentation
+• Demand Paging
+• Virtual Memory
+
+Difference:
+
+With overlays:
+
+The programmer managed the movement.
+
+With Virtual Memory:
+
+The operating system manages the movement automatically.
+
+------------------------------------------------------------
+VIRTUAL MEMORY WITH PAGING
+
+Virtual Memory can be implemented using Paging.
+
+Characteristics:
+
+• Program divided into equal-sized pages
+• Pages loaded on demand
+• No external fragmentation
+• Internal fragmentation still possible
+
+Address Format:
+
+Page Number + Displacement
+
+Required Table:
+
+PMT (Page Map Table)
+
+------------------------------------------------------------
+VIRTUAL MEMORY WITH SEGMENTATION
+
+Virtual Memory can also be implemented using Segmentation.
+
+Characteristics:
+
+• Program divided into logical segments
+• Segment sizes vary
+• External fragmentation exists
+• Internal fragmentation does not exist
+
+Address Format:
+
+Segment Number + Displacement
+
+Required Table:
+
+SMT (Segment Map Table)
+
+------------------------------------------------------------
+TABLE 3.6 EXPLANATION
+
+Virtual Memory with Paging
+
+Allows Internal Fragmentation
+
+Reason:
+
+The last page may not be completely full.
+
+Does Not Allow External Fragmentation
+
+Reason:
+
+All page frames have equal size.
+
+Pages are Equal-Sized
+
+Example:
+
+Page 0
+
+Page 1
+
+Page 2
+
+Page 3
+
+Address Format:
+
+Page Number + Displacement
+
+Uses:
+
+PMT
+
+------------------------------------------------------------
+
+Virtual Memory with Segmentation
+
+Does Not Allow Internal Fragmentation
+
+Reason:
+
+Segments are allocated according to actual program size.
+
+Allows External Fragmentation
+
+Reason:
+
+Segments have variable sizes.
+
+Segments are Unequal Sizes
+
+Example:
+
+Main Program
+
+Subroutine A
+
+Subroutine B
+
+Address Format:
+
+Segment Number + Displacement
+
+Uses:
+
+SMT
+
+------------------------------------------------------------
+CODE SHARING IN SEGMENTATION
+
+One major advantage of segmentation is:
+
+Code Sharing.
+
+Definition:
+
+Multiple users can share one copy of program code.
+
+Structure:
+
+Shared Segment
+
+Contains:
+
+• Executable Code
+• Reentrant Code
+
+Private Areas
+
+Contains:
+
+• User Data
+• User Variables
+
+Example:
+
+10 users run the same program.
+
+Instead of 10 copies:
+
+Only one code segment is loaded.
+
+Each user receives a separate data area.
+
+Result:
+
+Less memory usage.
+
+Less disk usage.
+
+------------------------------------------------------------
+REENTRANT CODE
+
+Definition:
+
+Code that can be safely shared by multiple users simultaneously.
+
+Characteristics:
+
+• Cannot be modified
+• Shared by all users
+• Saves memory
+
+Example:
+
+Word Processor Program
+
+Code Segment → Shared
+
+User Documents → Separate
+
+------------------------------------------------------------
+HOW VIRTUAL MEMORY WORKS
+
+Suppose:
+
+Program requests a page.
+
+Step 1
+
+The processor checks memory.
+
+Step 2
+
+If page exists:
+
+Continue execution.
+
+Step 3
+
+If page does not exist:
+
+Generate Page Fault.
+
+Step 4
+
+Memory Manager selects a page frame.
+
+Step 5
+
+Required page is loaded.
+
+Step 6
+
+PMT and MMT are updated.
+
+Step 7
+
+Execution resumes.
+
+------------------------------------------------------------
+VIRTUAL MEMORY IN MULTIPROGRAMMING
+
+Virtual Memory works extremely well in multiprogramming systems.
+
+Reason:
+
+Programs spend much of their time waiting.
+
+Waiting Examples:
+
+• Waiting for Input/Output
+• Waiting for Pages
+• Waiting for CPU Turn
+• Waiting for User Input
+
+During this wait:
+
+CPU executes another job.
+
+Result:
+
+Better CPU utilization.
+
+------------------------------------------------------------
+HOW VIRTUAL MEMORY IMPROVES SOFTWARE DEVELOPMENT
+
+Before Virtual Memory:
+
+Large programs were difficult to develop.
+
+With Virtual Memory:
+
+Programs can be divided into modules.
+
+Benefits:
+
+• Teams can develop separate modules
+• Modules can be linked later
+• Easier maintenance
+• Larger systems become practical
+
+------------------------------------------------------------
+ADVANTAGES OF VIRTUAL MEMORY
+
+1. Program Size No Longer Limited
+
+Programs can exceed physical memory size.
+
+2. Better Memory Utilization
+
+Only needed pages remain in memory.
+
+3. Supports Multiprogramming
+
+Many jobs can execute simultaneously.
+
+4. Supports Time Sharing
+
+Many users can use the system.
+
+5. Reduces Fragmentation
+
+Especially when combined with Paging.
+
+6. Allows Code Sharing
+
+Multiple users can share programs.
+
+7. Supports Dynamic Linking
+
+Program modules can be loaded when needed.
+
+------------------------------------------------------------
+DISADVANTAGES OF VIRTUAL MEMORY
+
+1. Increased Hardware Cost
+
+More hardware support is required.
+
+2. Increased Page Fault Overhead
+
+Swapping pages consumes resources.
+
+3. Increased Software Complexity
+
+Operating system becomes more complex.
+
+4. Thrashing Risk
+
+Excessive swapping reduces performance.
+
+------------------------------------------------------------
+CACHE MEMORY
+
+Cache Memory is designed to improve memory access speed.
+
+Definition:
+
+Cache Memory is a small, extremely fast memory located between the CPU and Main Memory.
+
+Purpose:
+
+Store frequently accessed data and instructions.
+
+Key Idea:
+
+Recently used data is likely to be used again.
+
+------------------------------------------------------------
+WHY CACHE MEMORY IS NEEDED
+
+Without Cache:
+
+CPU
+
+↓
+
+Main Memory
+
+↓
+
+Secondary Storage
+
+Every memory request travels to Main Memory.
+
+This is slow.
+
+With Cache:
+
+CPU
+
+↓
+
+Cache
+
+↓
+
+Main Memory
+
+↓
+
+Secondary Storage
+
+Frequently used data is found much faster.
+
+------------------------------------------------------------
+FIGURE 3.17 EXPLANATION
+
+Part (a) - Traditional Architecture
+
+CPU Registers
+
+↓
+
+Main Memory
+
+↓
+
+Secondary Storage
+
+Every memory access must go through Main Memory.
+
+Result:
+
+Slower execution.
+
+Part (b) - Modern Architecture
+
+CPU Registers
+
+↓
+
+Cache Memory
+
+↓
+
+Main Memory
+
+↓
+
+Secondary Storage
+
+Cache Memory acts as an intermediary.
+
+Result:
+
+CPU receives data much faster.
+
+------------------------------------------------------------
+CACHE LEVELS
+
+Most modern processors contain:
+
+L1 Cache
+
+Level 1 Cache
+
+• Fastest cache
+• Located inside CPU
+• Smallest size
+
+L2 Cache
+
+Level 2 Cache
+
+• Larger than L1
+• Slightly slower
+• Still much faster than RAM
+
+Data Search Order:
+
+L1 Cache
+
+↓
+
+L2 Cache
+
+↓
+
+Main Memory
+
+↓
+
+Secondary Storage
+
+------------------------------------------------------------
+BOOKMARK EXAMPLE
+
+Think of:
+
+Internet = Main Memory
+
+Bookmarks = Cache
+
+You do not search the entire internet every time.
+
+You first check bookmarks.
+
+Similarly:
+
+CPU first checks Cache.
+
+If data is found:
+
+Memory access is extremely fast.
+
+------------------------------------------------------------
+CACHE SLOTS
+
+Cache Memory is divided into equal-sized sections called Slots.
+
+Definition:
+
+A Slot is a location in Cache Memory that stores a block of data.
+
+Each Slot contains:
+
+• Data Block
+• Main Memory Address Label
+
+The Label identifies where the block came from.
+
+------------------------------------------------------------
+LOCALITY OF REFERENCE
+
+Cache relies on the principle of Locality of Reference.
+
+Definition:
+
+Recently used addresses are likely to be referenced again soon.
+
+Example:
+
+If CPU accesses Address 500:
+
+Addresses:
+
+501
+502
+503
+504
+
+will probably be used next.
+
+Therefore:
+
+Entire blocks are loaded rather than single values.
+
+------------------------------------------------------------
+MAIN MEMORY TRANSFER ALGORITHM
+
+Step 1
+
+CPU requests data.
+
+Step 2
+
+Cache is checked.
+
+If Found:
+
+Transfer directly to CPU.
+
+Done.
+
+If Not Found:
+
+Access Main Memory.
+
+Load block into Cache.
+
+Transfer data to CPU.
+
+Done.
+
+------------------------------------------------------------
+CACHE REPLACEMENT
+
+Problem:
+
+Cache size is limited.
+
+Eventually all slots become occupied.
+
+Solution:
+
+Replace an old block.
+
+Common Policy:
+
+LRU
+
+Least Recently Used
+
+Reason:
+
+Blocks not used recently are less likely to be needed.
+
+------------------------------------------------------------
+FACTORS AFFECTING CACHE PERFORMANCE
+
+1. Cache Size
+
+Larger cache usually improves performance.
+
+2. Block Size
+
+Larger blocks exploit locality better.
+
+3. Replacement Algorithm
+
+Often LRU.
+
+4. Rewrite Policy
+
+Determines when modified blocks are written back to memory.
+
+------------------------------------------------------------
+CACHE HIT RATIO
+
+Definition:
+
+The percentage of memory requests found in Cache.
+
+Formula:
+
+Hit Ratio =
+
+(Number of Requests Found in Cache ÷ Total Requests)
+
+× 100
+
+------------------------------------------------------------
+HIT RATIO EXAMPLE 1
+
+Total Requests = 10
+
+Found in Cache = 6
+
+Hit Ratio:
+
+(6 ÷ 10) × 100
+
+= 60%
+
+------------------------------------------------------------
+HIT RATIO EXAMPLE 2
+
+Total Requests = 100
+
+Found in Cache = 9
+
+Hit Ratio:
+
+(9 ÷ 100) × 100
+
+= 9%
+
+------------------------------------------------------------
+AVERAGE MEMORY ACCESS TIME
+
+Formula:
+
+Average Memory Access Time
+
+=
+
+Cache Access Time
+
++
+
+(1 - h)
+
+×
+
+Main Memory Access Time
+
+where:
+
+h = Hit Ratio
+
+------------------------------------------------------------
+EXAMPLE
+
+Cache Access Time
+
+= 200 ns
+
+Main Memory Access Time
+
+= 1000 ns
+
+Hit Ratio
+
+= 60%
+
+Calculation:
+
+200 + (1 - 0.60) × 1000
+
+= 200 + 400
+
+= 600 ns
+
+Answer:
+
+Average Memory Access Time = 600 ns
+
+------------------------------------------------------------
+WHY CACHE IS IMPORTANT
+
+Cache can reduce:
+
+• Memory access time
+• CPU waiting time
+
+And increase:
+
+• System performance
+• CPU efficiency
+• Program speed
+
+Many systems achieve:
+
+80% - 90% cache hit ratios.
+
+------------------------------------------------------------
+CHAPTER COMPARISON SUMMARY
+
+Single User
+
+Solved:
+• Simple operation
+
+Created:
+• One job at a time
+
+------------------------------------------------------------
+
+Fixed Partitions
+
+Solved:
+• CPU idle time
+
+Created:
+• Internal Fragmentation
+
+------------------------------------------------------------
+
+Dynamic Partitions
+
+Solved:
+• Internal Fragmentation
+
+Created:
+• External Fragmentation
+
+------------------------------------------------------------
+
+Relocatable Dynamic Partitions
+
+Solved:
+• External Fragmentation
+
+Created:
+• Compaction Overhead
+
+------------------------------------------------------------
+
+Paging
+
+Solved:
+• Need for Compaction
+
+Created:
+• Table Overhead
+• Internal Fragmentation
+
+------------------------------------------------------------
+
+Demand Paging
+
+Solved:
+• Program Size Limitation
+
+Created:
+• Page Fault Overhead
+• Thrashing
+
+------------------------------------------------------------
+
+Segmentation
+
+Solved:
+• Logical Program Organization
+
+Created:
+• External Fragmentation
+
+------------------------------------------------------------
+
+Segmented/Demand Paging
+
+Solved:
+• Large Virtual Memory
+
+Created:
+• Multiple Table Overhead
+
+------------------------------------------------------------
+EXAM SUMMARY
+
+Virtual Memory
+
+• Allows programs larger than RAM
+
+Paging
+
+• Equal-sized pages
+
+Segmentation
+
+• Variable-sized logical segments
+
+Virtual Memory with Paging
+
+• Internal Fragmentation
+• No External Fragmentation
+
+Virtual Memory with Segmentation
+
+• No Internal Fragmentation
+• External Fragmentation Exists
+
+Cache Memory
+
+• Very fast memory between CPU and RAM
+
+Hit Ratio
+
+• Percentage of requests found in cache
+
+L1 Cache
+
+• Fastest
+
+L2 Cache
+
+• Larger but slightly slower
+
+Quick Shortcut:
+
+Virtual Memory → Illusion of huge memory
+
+Paging → Equal Pages
+
+Segmentation → Logical Modules
+
+Cache → Faster Access
+
+Hit Ratio → Cache Efficiency
+
+LRU → Common Cache Replacement Policy
