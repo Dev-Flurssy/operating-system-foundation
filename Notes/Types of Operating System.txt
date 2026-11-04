@@ -301,8 +301,7 @@ Businesses demanded better system efficiency.
 MAJOR IMPROVEMENTS
 
 1. Computer Operators → Operators managed system activities.
-
-2. Job Scheduling Jobs → with similar requirements were grouped together.
+2. Job Scheduling → Jobs with similar requirements were grouped together.
 
 Examples:
 • FORTRAN Jobs Together
@@ -471,7 +470,6 @@ Examples:
 CHALLENGE
 
 Multimedia requires:
-
 • Large Storage
 • High Processing Power
 • Specialized Hardware

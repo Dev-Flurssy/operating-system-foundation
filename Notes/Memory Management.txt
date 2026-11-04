@@ -1,0 +1,437 @@
+MEMORY MANAGEMENT
+
+Memory Management is one of the most important functions of an Operating System.
+The Memory Manager controls and organizes the computer's main memory (RAM) so programs can run efficiently and safely.
+
+Think of it as:
+Programs → Memory Manager → RAM
+
+------------------------------------------------------------
+WHY IS MEMORY MANAGEMENT IMPORTANT?
+
+
+When a program needs memory:
+Step 1: The Memory Manager receives the memory request
+Step 2: The Memory Manager checks available memory space
+Step 3: The Memory Manager allocates memory to the program
+Step 4: The Memory Manager tracks memory usage
+Step 5: The Memory Manager releases memory when the program finishes
+
+Important:
+The Memory Manager does not execute the program.
+It controls how memory is allocated, protected, and freed.
+
+------------------------------------------------------------
+MEMORY MANAGER
+
+
+Manages the computer's main memory (RAM).
+Resource Managed: RAM (Main Memory)
+
+Functions:
+• Tracks memory usage
+• Allocates memory to programs
+• Releases memory when programs finish
+• Prevents memory conflicts
+• Protects memory from unauthorized access
+• Improves memory utilization
+
+------------------------------------------------------------
+EARLY MEMORY ALLOCATION SCHEMES
+
+Early operating systems used various methods to allocate memory.
+
+The four major memory allocation schemes are:
+1. Single-User Contiguous Scheme
+2. Fixed Partitions
+3. Dynamic Partitions
+4. Relocatable Dynamic Partitions
+
+Each new scheme improved memory utilization and system performance.
+
+------------------------------------------------------------
+SINGLE-USER CONTIGUOUS SCHEME
+
+
+The earliest memory allocation scheme.
+A single-user scheme supports one user on one computer running one job at a time.
+
+How It Works:
+• The entire program is loaded into memory
+• The program occupies one contiguous (continuous) memory block
+• Only one job can run at a time
+• The remaining memory stays unused
+
+Characteristics:
+• One user
+• One job at a time
+• Entire program must fit in memory
+• No sharing of memory
+
+Advantages:
+• Simple to implement
+• Easy memory management
+• Low hardware requirements
+
+Disadvantages:
+• Wastes memory
+• No multiprogramming
+• No networking support
+• Large programs may not fit in memory
+
+Key Point:
+One User + One Job + One Contiguous Memory Block
+
+------------------------------------------------------------
+FIXED PARTITIONS
+
+To allow multiple programs to reside in memory at the same time, operating systems introduced Fixed Partitions.
+
+What Are Fixed Partitions?
+Main memory is divided into several predefined partitions.
+Each partition can hold only one program.
+Partition sizes are determined before the system starts.
+
+Characteristics:
+• Multiple programs can be in memory
+• One program per partition
+• Partition sizes are fixed
+• Restart is required to change partition sizes
+
+Advantages:
+• Supports multiprogramming
+• Better memory usage than single-user systems
+• Multiple jobs can run concurrently
+
+Disadvantages:
+• Memory can be wasted
+• Large jobs may be rejected
+• Partition sizes cannot adapt dynamically
+
+------------------------------------------------------------
+INTERNAL FRAGMENTATION
+
+A major problem of Fixed Partitions.
+
+Definition:
+Internal Fragmentation occurs when a program uses only part of its assigned partition.
+The unused memory inside that partition is wasted.
+
+Example:
+Partition Size = 100 KB
+Program Size = 30 KB
+Unused Space = 70 KB
+
+Result:
+Memory inside the partition cannot be used by another program.
+
+Key Point:
+Unused space exists INSIDE an allocated partition.
+
+------------------------------------------------------------
+MEMORY PROTECTION
+
+Each partition belongs to one program.
+The operating system prevents other programs from entering that partition.
+
+Purpose:
+• Prevent accidental modification
+• Protect program data
+• Improve system stability
+• Improve security
+
+------------------------------------------------------------
+DYNAMIC PARTITIONS
+
+Fixed partitions wasted memory.
+Dynamic Partitions were introduced to improve memory utilization.
+
+What Are Dynamic Partitions?
+Programs are allocated only the amount of memory they actually need.
+Partitions are created dynamically when required.
+
+Characteristics:
+• Memory sizes are created as needed
+• Programs receive exact memory requirements
+• Better utilization of RAM
+• Supports multiprogramming
+
+Advantages:
+• Less wasted memory
+• More flexible than fixed partitions
+
+Disadvantages:
+• Suffers from External Fragmentation
+
+------------------------------------------------------------
+EXTERNAL FRAGMENTATION
+
+A major problem of Dynamic Partitions.
+
+Definition:
+External Fragmentation occurs when free memory becomes scattered into many small blocks.
+Although enough total memory may exist, it is not available as one contiguous block.
+
+Example:
+Free Block 1 = 5 KB
+Free Block 2 = 10 KB
+Free Block 3 = 20 KB
+Total Free Memory = 35 KB
+
+A new program requires 30 KB.
+The program cannot be loaded because the free space is not contiguous.
+
+Result:
+Programs may have to wait even when enough free memory exists.
+
+Key Point:
+Unused space exists BETWEEN allocated partitions.
+
+------------------------------------------------------------
+RELOCATABLE DYNAMIC PARTITIONS
+
+Relocatable Dynamic Partitions improve Dynamic Partitions.
+
+How It Works:
+Programs can be moved within memory while they are in execution.
+This allows scattered free spaces to be combined into one larger block.
+
+Advantages:
+• Reduces external fragmentation
+• More efficient memory utilization
+• Supports compaction
+
+Disadvantages:
+• Requires additional operating system overhead
+• Relocation consumes processing time
+
+------------------------------------------------------------
+FIRST-FIT MEMORY ALLOCATION
+
+The operating system allocates memory from the first free block large enough to hold the program.
+
+Advantages:
+• Fast
+• Simple implementation
+
+Disadvantages:
+• Can increase fragmentation over time
+
+------------------------------------------------------------
+BEST-FIT MEMORY ALLOCATION
+
+The operating system allocates memory from the smallest available block that can hold the program.
+
+Advantages:
+• Reduces wasted space
+• Better memory utilization
+
+Disadvantages:
+• Slower because many blocks must be searched
+
+------------------------------------------------------------
+MEMORY LIST
+
+The Memory Manager maintains a Memory List.
+
+Purpose:
+• Tracks free memory blocks
+• Tracks allocated memory blocks
+• Stores memory addresses
+• Stores memory sizes
+
+Importance:
+The Memory List helps the operating system know where programs can be loaded.
+
+------------------------------------------------------------
+DEALLOCATION OF MEMORY
+
+When a program finishes:
+
+Step 1: The operating system removes the program from memory
+Step 2: The memory becomes available
+Step 3: The Memory List is updated
+
+Importance:
+Without deallocation, memory would eventually become full and no other programs could run.
+
+------------------------------------------------------------
+BOUNDS REGISTER
+
+A Bounds Register is used for memory protection.
+
+Purpose:
+It defines the memory limit a program can access.
+
+Benefits:
+• Prevents illegal memory access
+• Protects other programs
+• Protects the operating system
+• Improves system security
+
+Key Point:
+Programs cannot access memory outside their assigned boundaries.
+
+------------------------------------------------------------
+COMPACTION
+
+Compaction is used to reduce external fragmentation.
+
+How It Works:
+The operating system moves programs closer together.
+Scattered free spaces are combined into one large contiguous block.
+
+Benefits:
+• Creates larger free memory areas
+• Reduces external fragmentation
+• Improves memory utilization
+
+Disadvantages:
+• Requires CPU time
+• Causes system overhead
+
+------------------------------------------------------------
+DYNAMIC PARTITIONS - FIGURE 2.4
+------------------------------------------------------------
+
+Dynamic Partitions allocate only the memory a job actually needs.
+Unlike Fixed Partitions, memory is not divided into fixed sections beforehand.
+Jobs are loaded into memory as they arrive and receive exactly the amount of memory they request.
+This reduces Internal Fragmentation but creates a new problem called External Fragmentation.
+
+Snapshot (a) - Initial Memory Allocation
+
+Job List:
+J1 = 10K
+J2 = 15K
+J3 = 20K
+J4 = 50K
+
+Memory Allocation:
+Operating System
+Job 1 = 10K
+Job 2 = 15K
+Job 3 = 20K
+Job 4 = 50K
+
+Total Memory Used:
+10K + 15K + 20K + 50K = 95K
+
+All jobs are allocated exactly the memory they need.
+No memory is wasted inside partitions.
+
+Snapshot (b) - Job 1 and Job 4 Finish
+
+Job 1 ends.
+Job 4 ends.
+
+Their memory becomes free.
+
+Memory Layout:
+Free Space = 10K
+Job 2 = 15K
+Job 3 = 20K
+Free Space = 50K
+
+Notice:
+There are now two separate free areas.
+Memory is no longer one continuous block.
+
+Snapshot (c) - Job 5 and Job 6 Arrive
+
+Job 5 = 5K
+Job 6 = 30K
+
+Using First-Come First-Served:
+
+Job 5 takes the first available free block.
+Job 5 enters the 10K free area.
+
+Remaining Free Space = 5K
+
+Job 6 enters the 50K free area.
+
+Remaining Free Space = 20K
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Job 3 = 20K
+Job 6 = 30K
+Free = 20K
+
+Snapshot (d) - Job 3 Finishes
+
+Job 3 completes execution.
+
+Its 20K memory space becomes free.
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Free = 20K
+Job 6 = 30K
+Free = 20K
+
+Now there are three separate free spaces:
+
+Free Space 1 = 5K
+Free Space 2 = 20K
+Free Space 3 = 20K
+
+Total Free Memory:
+5K + 20K + 20K = 45K
+
+Snapshot (e) - Job 7 Arrives
+
+Job 7 = 10K
+
+The first free block large enough is the 20K block.
+
+Therefore Job 7 is loaded there.
+
+Memory Layout:
+Job 5 = 5K
+Free = 5K
+Job 2 = 15K
+Job 7 = 10K
+Free = 10K
+Job 6 = 30K
+Free = 20K
+
+Why Does Job 8 Wait?
+
+Job 8 requires 30K.
+
+Available Free Memory:
+5K + 10K + 20K = 35K
+
+Although 35K is available, there is no single contiguous block of 30K.
+
+Available blocks:
+• 5K
+• 10K
+• 20K
+
+None is large enough individually.
+
+Therefore Job 8 cannot be loaded and must wait.
+
+External Fragmentation
+
+Definition:
+External Fragmentation occurs when enough total memory exists but it is scattered into several small blocks.
+
+Example:
+Free Memory = 35K
+Required Memory = 30K
+
+Job 8 still cannot be loaded because the memory is split into:
+• 5K
+• 10K
+• 20K
+
+Key Point:
+External Fragmentation = Free memory exists but is scattered.

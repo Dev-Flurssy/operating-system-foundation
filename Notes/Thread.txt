@@ -86,10 +86,6 @@ THREAD
 
 A Thread is a smaller unit of execution inside a process.
 A thread is sometimes called a Lightweight Process.
-
-------------------------------------------------------------
-DEFINITION OF A THREAD
-
 A thread is the smallest unit that can be scheduled and executed by the operating system.
 
 ------------------------------------------------------------

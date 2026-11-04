@@ -16,7 +16,6 @@ Examples:
 MAJOR HARDWARE COMPONENTS
 
 A computer system consists of three major hardware components:
-
 1. Main Memory (RAM)
 2. Input/Output Devices (I/O Devices)
 3. Central Processing Unit (CPU)
@@ -38,7 +37,6 @@ A program must be loaded into RAM before the CPU can execute it.
 INPUT/OUTPUT DEVICES (I/O DEVICES)
 
 I/O devices allow communication between the computer and the outside world.
-
 Input devices send data into the computer.
 Output devices receive data from the computer.
 
@@ -69,7 +67,6 @@ Functions:
 All storage operations, data manipulations, and I/O activities are initiated or controlled by the CPU.
 
 ------------------------------------------------------------
-
 EARLY COMPUTER CLASSIFICATIONS
 
 Before the mid-1970s, computers were classified according to:
@@ -157,7 +154,8 @@ USES OF SUPERCOMPUTERS
 
 • Weather forecasting
 • Military operations
-• Scientific research• Animation and movie production
+• Scientific research
+• Animation and movie production
 • Product development
 • Oil exploration
 • Large-scale simulations
@@ -207,8 +205,7 @@ A server provides resources and services to clients.
 Examples:
 • Print Server
 • Email Server
-• Web Server
-• File Server
+• Web Servererver
 
 ------------------------------------------------------------
 FILE SERVER
@@ -343,7 +340,7 @@ As transistor counts increase:
 • Computing power grows exponentially
 
 ------------------------------------------------------------
-QUICK  SUMMARY
+QUICK SUMMARY
 
 Main Hardware Components:
 1. RAM → Stores programs and data currently in use
@@ -356,7 +353,7 @@ Computer Types:
 Mainframe → Large organizations
 Minicomputer → Schools and small organizations
 Midrange Computer → Between microcomputers and mainframes
-SupercomputeR → Scientific and high-speed calculations
+Supercomputer → Scientific and high-speed calculations
 Microcomputer → Personal use
 Workstation → Professional technical work
 Server → Provides network services
