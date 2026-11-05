@@ -176,10 +176,9 @@ PAGE SWAPPING
  
 is the movement of pages between memory and secondary storage.
 
-Example:
-Memory is full.
-
+Example: Memory is full.
 A new page is requested.
+
 Step 1: Remove an old page.
 Step 2: Copy that page back to disk (if modified).
 Step 3: Load the requested page.

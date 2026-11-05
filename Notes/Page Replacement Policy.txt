@@ -225,9 +225,8 @@ Same Example:
 
 Pages Requested:
 A, B, A, C, A, B, D, B, A, C, D
+Frames Available: 2
 
-Frames Available:
-2
 Time 1
 Request A
 Fault = Yes
@@ -339,8 +338,7 @@ STACK ALGORITHM
 
 A page replacement algorithm where adding more memory can never increase the number of page faults.
 
-Example:
-LRU
+Example: LRU
 Because LRU is a Stack Algorithm:
 More memory always produces the same number or fewer page faults.
 Never more.
@@ -351,8 +349,8 @@ CLOCK PAGE REPLACEMENT
 A variation of LRU that uses a circular queue.
 It behaves like a clock.
 
-Instead of tracking exact usage time, it tracks:
-Reference Bits
+Instead of tracking exact usage time, 
+it tracks: Reference Bits
 
 Reference Bit:
 1 = Recently Used
@@ -362,7 +360,6 @@ Reference Bit:
 HOW CLOCK REPLACEMENT WORKS
 
 Step 1: A pointer moves around a circular queue.
-
 Step 2: Check current page's Reference Bit.
 
 If Bit = 1
