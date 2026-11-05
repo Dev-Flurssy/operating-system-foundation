@@ -76,8 +76,7 @@ Disadvantages:
 • No networking support
 • Large programs may not fit in memory
 
-Key Point:
-One User + One Job + One Contiguous Memory Block
+Key Point: One User + One Job + One Contiguous Memory Block
 
 ------------------------------------------------------------
 FIXED PARTITIONS
