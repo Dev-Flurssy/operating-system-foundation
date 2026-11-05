@@ -351,14 +351,9 @@ Displacement = Remainder
 ------------------------------------------------------------
 ADDRESS TRANSLATION
 
-Address Translation converts:
-Logical Address into Physical Address
-
-Logical Address:
-Address relative to the program.
-
-Physical Address:
-Actual location in main memory.
+Address Translation converts: Logical Address into Physical Address
+Logical Address: Address relative to the program.
+Physical Address: Actual location in main memory.
 
 Every memory access uses address translation.
 Also Called:

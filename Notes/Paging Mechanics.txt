@@ -19,11 +19,11 @@ Recall that Demand Paging added three important bits to every page entry:
 1. Status Bit
 2. Referenced Bit
 3. Modified Bit
+
 The PMT also stores:
 4. Page Frame Number
 
 Example (Table 3.3)
-
 Page 0
 Status Bit = 1
 Referenced Bit = 1
