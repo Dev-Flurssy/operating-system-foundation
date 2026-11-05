@@ -205,7 +205,7 @@ A server provides resources and services to clients.
 Examples:
 • Print Server
 • Email Server
-• Web Servererver
+• Web Serverer
 
 ------------------------------------------------------------
 FILE SERVER
