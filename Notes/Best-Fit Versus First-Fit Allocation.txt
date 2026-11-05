@@ -3,10 +3,8 @@ BEST-FIT VS FIRST-FIT ALLOCATION
 When jobs arrive in memory, the operating system must decide where to place them.
 
 To do this, the Memory Manager keeps two lists:
-Free List:
-Contains all available memory blocks.
-Busy List:
-Contains all occupied memory blocks.
+Free List: Contains all available memory blocks.
+Busy List: Contains all occupied memory blocks.
 
 For every new job, the operating system searches the free list and allocates memory using either:
 • First-Fit Allocation
