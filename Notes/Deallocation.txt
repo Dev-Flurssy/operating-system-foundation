@@ -54,7 +54,8 @@ Case 3: The released block touches NO free block.
 ------------------------------------------------------------
 CASE 1 - JOINING TWO FREE BLOCKS
 
-Original Situation 
+Original Situation
+
 Free List:
 Address 4075 → Size 105
 Address 5225 → Size 5
@@ -84,39 +85,68 @@ Therefore:
 7600 + 200 = 7800
 This proves the busy job is directly beside the free block beginning at 7800.
 
-----------------------------
+--------------------------------
 When the job finishes:
+
 Released Block:
 Address = 7600
 Size = 200
 
-The system combines:
-200 + 5
+The system first turns the busy block into a free block:
+Address = 7600
+Size = 200 Free
 
-New Size:
-205
+Then it checks neighbouring blocks.
+Since:
+7600 + 200 = 7800
+the released block is directly adjacent to the free block at 7800.
+
+Therefore the two blocks are merged:
+200 + 5 = 205
 
 New Free Block:
 Address = 7600
 Size = 205
 
 Why 7600?
-The merged block begins from the lowest address.
+The merged block starts at the lowest address of the blocks being merged:
+7600 → Size 200
+7800 → Size 5
 
-----------------------------
-Final Free List 
-Address 7600 → Size 205 Free
+Lowest address = 7600
+
+Note:
+The block at 7560 is NOT merged because:
+7560 + 20 = 7580
+and
+7580 ≠ 7600
+
+There is a gap between them, so they are not adjacent.
+
+--------------------------------
+Final Free List
+
+Address 4075 → Size 105
+Address 5225 → Size 5
+Address 6785 → Size 600
+Address 7560 → Size 20
+Address 7600 → Size 205
+Address 10250 → Size 4050
+Address 15125 → Size 230
+Address 24500 → Size 1000
 
 Calculation:
 200 + 5 = 205
 
 Result:
-Two neighbouring blocks become one larger free block.
+Two neighbouring blocks (7600 and 7800) become one larger free block of size 205, 
+while the block at 7560 remains unchanged because it is not adjacent.
 
 ------------------------------------------------------------
 CASE 2 - JOINING THREE FREE BLOCKS
 
-Original Situation 
+Original Situation
+
 Free Block:
 Address 7560 → Size 20
 
@@ -134,11 +164,11 @@ Memory Layout:
 How do we know?
 First Free Block:
 7560 + 20 = 7580
-Busy Job starts exactly where first free block ends.
+The busy job starts exactly where the first free block ends.
 
 Busy Job:
 7580 + 20 = 7600
-Second Free Block starts exactly where busy job ends.
+The second free block starts exactly where the busy job ends.
 
 Therefore:
 Free → Busy → Free
@@ -146,91 +176,159 @@ Three consecutive blocks exist.
 
 ----------------------------
 When the middle job finishes:
-Combine:
+
+Released Block:
+Address = 7580
+Size = 20
+
+The system first changes the busy job into a free block:
+Address = 7580
+Size = 20 Free
+
+Now three adjacent free blocks exist:
+7560 → Size 20 Free
+7580 → Size 20 Free
+7600 → Size 205 Free
+
+Since:
+7560 + 20 = 7580
+and
+7580 + 20 = 7600
+all three blocks are directly adjacent and can be merged.
+
+The system combines:
 20 + 20 + 205
 
 Calculation:
 20 + 20 + 205 = 245
 
-The new merged block starts at the smallest address:
-7560
-
-New Entry:
+New Free Block:
 Address = 7560
 Size = 245
 
-The old entry at 7600 is removed.
-Instead of deleting the row, the operating system creates:
+Why 7560?
+The merged block starts at the smallest address among all merged blocks.
+
+Blocks being merged:
+7560 → Size 20
+7580 → Size 20
+7600 → Size 205
+Smallest address = 7560
 
 ----------------------------
 Null Entry
 
-Address 7560 → Size 245
-
-Address 10250 → Size 4050
+The old entry at Address 7600 is no longer needed because its space has been merged into the block starting at 7560.
+Instead of deleting the row and rearranging the entire free list, the operating system marks that entry as a Null Entry.
 
 Why Null Entry?
-Deleting rows would require moving every record.
-A null entry keeps the table organized and saves processing time.
+Deleting rows would require moving other records in the list.
+A Null Entry keeps the table organized and reduces processing overhead.
+
+----------------------------
+Final Free List
+
+Address 7560 → Size 245 Free
+Calculation:
+20 + 20 + 205 = 245
+
+Result: Three neighbouring blocks become one larger free block of size 245 starting at address 7560.
 
 ------------------------------------------------------------
 CASE 3 - ISOLATED BLOCK
 
-This is the most interesting case.
-The finished job is not beside any free block.
-
-Original Free List 
-Address 4075 → 105
-Address 5225 → 5
-Address 6785 → 600
-Address 7560 → 245
-
-Null Entry
-Address 10250 → 4050
-Address 15125 → 230
-Address 24500 → 1000
-
-Busy List 
-Address 7805 → 1000 Busy
-Address 8805 → 445 Busy
-Address 9250 → 1000 Busy
-
 Notice:
-The job to be released:
-Address = 8805
-Size = 445
+The Free List contains a Null Entry.
+No free blocks adjacent to the released block exist.
 
-Memory Layout:
-Busy
-7805 → 1000
-Busy
-8805 → 445
-Busy
-9250 → 1000
-
-There is NO free block touching the 445 block.
-
-------------------------------------------------------------
 Therefore:
 No merging can occur.
 
-Step 1: The job finishes.
-Step 2: Find a null entry in the Free List.
-Step 3: Insert:
+Step 1:
+The job at Address 8805, Size 445 finishes.
+
+Step 2: 
+The operating system searches the Free List for a Null Entry.
+
+Step 3:
+The Null Entry is reused.
+
+The entry becomes:
 Address = 8805
 Size = 445
 Status = Free
-Step 4:  Remove job from Busy List.
-Busy List becomes:
-7805 → 1000 Busy
-Null Entry
-9250 → 1000 Busy
-Step 5: Update Free List.
-New Free List:
-8805 → 445 Free
+
+Step 4:
+The job is removed from the Busy List.
 
 Result:
-The block is simply added to the Free List because no neighbouring free block exists.
+Because the released block is not adjacent to any free block, it cannot be merged.
+Instead, the operating system places it into the Free List by replacing the Null Entry.
+
+----------------------------
+When the job finishes:
+
+Released Block:
+Address = 8805
+Size = 445
+
+The operating system checks both neighbouring blocks.
+
+Left Side:
+7805 → Size 1000 Busy
+
+Right Side:
+9250 → Size 1000 Busy
+
+Since both neighbouring blocks are busy, no adjacent free block exists.
+Therefore: No merging can occur.
+
+Step 1: The job finishes and becomes free.
+
+Address = 8805
+Size = 445 Free
+
+Step 2: The operating system searches the Free List for a Null Entry.
+
+Step 3: The Null Entry is reused and updated with:
+
+Address = 8805
+Size = 445
+Status = Free
+
+Step 4: The job is removed from the Busy List.
+
+Busy List becomes:
+7805 → Size 1000 Busy
+Null Entry
+9250 → Size 1000 Busy
+
+Step 5: The Free List is updated.
+
+The reused Null Entry now contains:
+Address = 8805
+Size = 445 Free
+
+----------------------------
+Final Free List
+
+Address 4075 → Size 105
+Address 5225 → Size 5
+Address 6785 → Size 600
+Address 7560 → Size 245
+Address 8805 → Size 445
+Address 10250 → Size 4050
+Address 15125 → Size 230
+Address 24500 → Size 1000
+
+----------------------------
+Result:
+
+No neighbouring free block exists, so no merging takes place.
+The released block is simply inserted into the Free List by replacing a Null Entry.
+
+Final Entry:
+Address 8805 → Size 445 Free
 
 ------------------------------------------------------------
 HOW ARE THE TABLE VALUES CALCULATED?
@@ -326,29 +424,5 @@ Size = Null
 Status = Null Entry
 
 When a block becomes free, this row can be reused.
-
-------------------------------------------------------------
-EXAM SUMMARY
-
-Case 1
-• Released block next to one free block
-• Merge two blocks
-
-Case 2
-• Released block between two free blocks
-• Merge three blocks
-
-Case 3
-• Released block isolated
-• No merging
-• Create a new free entry
-
-Adjacent Test:
-Beginning Address + Size = Next Beginning Address
-
-Null Entry:
-Empty row used to avoid reorganizing the table
-Main Goal of Deallocation:
-Reduce External Fragmentation and make memory available for future jobs.
 
 ------------------------------------------------------------
