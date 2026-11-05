@@ -44,13 +44,11 @@ Eliminate External Fragmentation.
 
 ----------------------------
 Example:
+
 Before Compaction
-Job 1
-Free 12K
-Job 2
-Free 30K
-Job 3
-Free 54K
+Job 1  Free 12K
+Job 2  Free 30K
+Job 3  Free 54K
 
 Total Free Memory:
 12K + 30K + 54K = 96K
@@ -74,16 +72,18 @@ Before Compaction
 
 Memory Layout:
 Operating System = 10K
+
 Job 1 = 8K
-
 Free Space = 12K
-Job 4 = 32K
 
+Job 4 = 32K
 Free Space = 30K
+
 Job 2 = 16K
 
 Job 5 = 48K
 Free Space = 54K
+
 Job 6 = 84K (Waiting)
 
 Total Free Memory:
@@ -207,12 +207,10 @@ Data values stay the same.
 ------------------------------------------------------------
 ADDRESS FLAGGING
 
-
 Before relocation, the operating system identifies all memory addresses.
 These addresses are marked (flagged).
 
 Example from Figure 2.8
-
 Addresses are shown with apostrophes:
 '1
 '2
@@ -231,15 +229,12 @@ RELOCATION REGISTER
 A relocation register stores the amount by which a program has moved.
 
 Formula:
-New Address =
-Old Address + Relocation Register
+New Address = Old Address + Relocation Register
 
-If the relocation register is:
-0
+If the relocation register is: 0
 The program has not moved.
 
-If the relocation register is:
--12288
+If the relocation register is: -12288
 Every address must be reduced by 12288.
 
 ------------------------------------------------------------
@@ -263,6 +258,7 @@ Bounds Register → Used for memory protection
 RELOCATION REGISTER EXAMPLE
 
 Original Situation
+
 Job 4 starts at:
 30K
 
@@ -284,8 +280,10 @@ Ending Address:
 Therefore Job 4 occupies:
 30720 to 63487
 
+------------------------------------------------------------
 Original Instruction
-Location:
+
+Instruction Location:
 31744
 
 Instruction:
@@ -294,13 +292,31 @@ LOAD 4, ANSWER
 ANSWER is stored at:
 53248
 
-Value of ANSWER:
+Value stored in ANSWER:
 37
 
-------------------------------------------------------------
-AFTER COMPACTION
+Before compaction:
+Instruction Address = 31744
+Data Address = 53248
+Value = 37
 
-Job 4 is moved.
+------------------------------------------------------------
+Why Compaction Is Needed
+
+Memory contains several small free spaces (holes) between jobs.
+
+These scattered holes cause:
+External Fragmentation
+Even though enough total free memory exists, it is broken into small pieces.
+
+To create one large free block, the operating system moves jobs closer together.
+This process is called: Compaction
+
+------------------------------------------------------------
+After Compaction
+
+Job 4 is moved to a new location.
+
 New Starting Address:
 18K
 
@@ -308,51 +324,122 @@ Convert to bytes:
 18 × 1024
 = 18432
 
+Old Starting Address:
+30720
+
+New Starting Address:
+18432
+
+------------------------------------------------------------
+How Far Did Job 4 Move?
+
 Amount Moved:
 30720 - 18432
 = 12288
 
-Relocation Register:
--12288
-Negative because the program moved toward lower addresses.
+Job 4 moved 12288 bytes toward lower memory addresses.
 
 ------------------------------------------------------------
-ADJUSTING THE ADDRESSES
+Relocation Register
+
+Relocation Register:
+-12288
+
+Why Negative?
+Because the program moved downward in memory.
+
+Old Start Address:
+30720
+
+New Start Address:
+18432
+
+Since all addresses became smaller:
+Relocation Register = -12288
+
+------------------------------------------------------------
+Adjusting the Instruction Address
 
 Original Instruction Address:
 31744
 
-New Address:
+Apply Relocation:
 31744 - 12288
 = 19456
+
+New Instruction Address:
+19456
+
+------------------------------------------------------------
+Adjusting the Data Address
 
 Original Data Address:
 53248
 
-New Address:
+Apply Relocation:
 53248 - 12288
 = 40960
 
-Therefore:
-Before Relocation
-Instruction at:
-31744
-
-Data at:
-53248
-
-After Relocation
-Instruction at:
-19456
-Data at:
+New Data Address:
 40960
+------------------------------------------------------------
+Before Relocation
 
-Value still:
-37
+Job 4 Start Address = 30720
+Instruction Address = 31744
+Data Address = 53248
+Value Stored = 37
 
-Notice:
-Address changed.
-Data did not.
+------------------------------------------------------------
+After Relocation
+
+Job 4 Start Address = 18432
+Instruction Address = 19456
+Data Address = 40960
+Value Stored = 37
+
+------------------------------------------------------------
+Notice
+
+The addresses changed:
+31744 → 19456
+53248 → 40960
+
+However, the data did NOT change:
+ANSWER = 37
+before relocation.
+ANSWER = 37
+after relocation.
+Only the locations changed.
+
+The contents remained exactly the same.
+
+------------------------------------------------------------
+Exam Shortcut
+
+Step 1: Find how far the program moved.
+
+Amount Moved
+= Old Start Address - New Start Address
+
+Step 2: Apply the same adjustment to every address inside the program.
+
+New Address
+= Old Address - Amount Moved
+
+For this example:
+Amount Moved = 12288
+
+Instruction:
+31744 - 12288
+= 19456
+
+Data:
+53248 - 12288
+= 40960
+
+Result:
+Every address inside Job 4 moves by the same amount (12288 bytes), while the value stored in memory remains unchanged.
 
 ------------------------------------------------------------
 WHY IS RELOCATION NECESSARY?
