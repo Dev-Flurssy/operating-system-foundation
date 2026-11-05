@@ -297,19 +297,18 @@ Examples:
 Byte 125
 125 ÷ 100
 = 1 remainder 25
-
 Page = 1
 Displacement = 25
+
 Byte 214
 214 ÷ 100
 = 2 remainder 14
-
 Page = 2
 Displacement = 14
+
 Byte 349
 349 ÷ 100
 = 3 remainder 49
-
 Page = 3
 Displacement = 49
 
