@@ -59,8 +59,8 @@ Each module remains intact.
 FIGURE 3.13 EXPLANATION
 
 Job 1 contains three logical modules:
-Segment 0
 
+Segment 0
 Main Program
 Size = 350 Bytes
 
@@ -395,19 +395,18 @@ then Memory
 
 This takes time.
 
-Solution:
-Associative Memory
+Solution:Associative Memory
 A special collection of hardware registers that stores recently used segment and page references.
 Purpose: Speed up address translation.
 
 ------------------------------------------------------------
 HOW ASSOCIATIVE MEMORY WORKS
 
-Suppose:
-Page needed was recently accessed.
+Suppose: Page needed was recently accessed.
 
 Step 1
 Search Associative Memory.
+
 If found:
 Immediate address translation.
 No SMT search.

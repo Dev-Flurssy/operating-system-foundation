@@ -1,4 +1,3 @@
-------------------------------------------------------------
 VIRTUAL MEMORY
 
 Demand Paging made Virtual Memory possible.
@@ -8,7 +7,8 @@ A program had to fit into available memory before execution.
 Large programs could not run if insufficient memory existed.
 
 Virtual Memory removed this restriction.
-Virtual Memory is a memory management technique that allows programs larger than physical memory to execute by loading only the needed portions into memory.
+Virtual Memory is a memory management technique that allows programs larger than 
+physical memory to execute by loading only the needed portions into memory.
 
 Key Idea:
 Only part of a program is actually in RAM.
